@@ -7,38 +7,34 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
-        type: Sequelize.STRING(20),
+      userId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: false
+        references: {
+          model: "Users",
+          key: "id"
+        }
       },
-      lastname: {
-        type: Sequelize.STRING(30),
+      questionId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: false
-      }, 
-      username: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
+        references: {
+          model: "Questions",
+          key: "id"
+        }
       },
-      email: {
-        type: Sequelize.STRING(25),
-        allowNull: false,
-        unique: true
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
+      body: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
-      createdAt: {
+       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
@@ -52,7 +48,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
+    options.tableName = "Comments";
     return queryInterface.dropTable(options);
   }
 };
