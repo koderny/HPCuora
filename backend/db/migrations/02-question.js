@@ -25,11 +25,11 @@ module.exports = {
 
       },
       title: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: false
       },
-      body: {
-        type: Sequelize.TEXT,
+      questionBody: {
+        type: Sequelize.STRING(2000),
         allowNull: false,
 
       },

@@ -3,7 +3,9 @@
 const express = require('express')
 const usersRouter = require('./users.js');
 const sessionRouter = require('./session.js');
-// const spotsRouter = require('./spots.js');
+const commentsRouter = require('./comments.js');
+const questionsRouter = require('./questions.js');
+const questionImagesRouter = require('./questionImages.js')
 
 
 
@@ -22,6 +24,9 @@ router.use(restoreUser);
 // --Routes for API--
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
+router.use('/comments', commentsRouter);
+router.use('/questions', questionsRouter);
+router.use('/questionImages', questionImagesRouter);
 
 
 

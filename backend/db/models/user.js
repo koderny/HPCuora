@@ -34,7 +34,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(20),
         allowNull: false,
         validate: {
-          len: [3, 30],
           isAlpha: true,
         }
       },
@@ -42,7 +41,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(30),
         allowNull: false,
         validate: {
-          len: [3, 30],
           isAlpha: true
         }
       },

@@ -7,14 +7,14 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Comments', {
+    await queryInterface.createTable('QuestionImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      questionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -22,19 +22,15 @@ module.exports = {
           key: "id"
         }
       },
-      questionId: {
-        type: Sequelize.INTEGER,
+      url: {
+        type: Sequelize.STRING(500),
         allowNull: false,
-        references: {
-          model: "Questions",
-          key: "id"
-        }
       },
-      commentBody: {
-        type: Sequelize.STRING(2000),
-        allowNull: false
+      preview: {
+        type: Sequelize.BOOLEAN,
+        default: false
       },
-       createdAt: {
+      savedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
@@ -48,7 +44,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Comments";
+    options.tableName = "QuestionImages";
     return queryInterface.dropTable(options);
   }
 };

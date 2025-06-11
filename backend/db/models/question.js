@@ -33,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false
     },
-    body: {
-      type: DataTypes.STRING,
+    questionBody: {
+      type: DataTypes.STRING(2000),
       allowNull: false
     },
     created_at: {

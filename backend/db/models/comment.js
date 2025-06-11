@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
-      body: {
-        types: DataTypes.TEXT,
+      commentBody: {
+        types: DataTypes.STRING(2000),
         allowNull: false
       },
       createdAt: {
