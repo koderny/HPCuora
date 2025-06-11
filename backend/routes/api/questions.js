@@ -203,11 +203,23 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
         error.status = 403
         throw error;
     }
+
+    const existingImage = await QuestionImage.findOne({
+      where: { questionId: questionId }
+    });
+
+    if (existingImage) {
+      const error = new Error('Question already has an image.');
+      error.status = 400;
+      throw error;
+    }
+
     const newImage = await QuestionImage.create({
       questionId: parseInt(questionId),
       url,
-      preview,
+      preview: true,
     });
+
     return res.status(201).json(newImage);
   } catch (error) {
     next(error);

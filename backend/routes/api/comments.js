@@ -17,65 +17,84 @@ const validateComment = [
     .withMessage('Comment is required'),
 ]
 
-//GET ALL COMMENTS
-// Route to get all comments for a specific question
-router.get('/:questionId/comments', async (req, res, next) => {
-  const { questionId } = req.params;
-
+// Route to update an existing comment
+router.put('/:commentId', requireAuth, validateComment, async (req, res, next) => {
   try {
-    
-    const question = await Question.findByPk(questionId);
+    const { commentId } = req.params;
+    const { comment } = req.body;
+    const userId = req.user.id;
 
-    if (!question) {
-      const noResourceError = new Error("Question couldn't be found");
-      noResourceError.status = 404;
-      throw noResourceError;
+  
+    const existingComment = await Comment.findByPk(commentId);
+
+    if (!existingComment) {
+      
+      let noCommentError = new Error("Comment couldn't be found");
+      noCommentError.status = 404;
+      throw noCommentError;
     }
 
-    //comments tied to a specific question
-    const comments = await Comment.findAll({  
-      where: {
-        question_id: questionId,
-      },
-      //include user info who posted question
-      include: [ 
-        {
-          model: User,
-          attributes: ['id', 'username', 'firstname', 'lastname'],
-        },
-      ],
-      order: [['createdAt', 'ASC']], 
-    });
+    if (existingComment.userId !== userId) {
+      
+      let notUserCommentError = new Error("Forbidden: This is not your Comment");
+      notUserCommentError.status = 403;
+      throw notUserCommentError;
+    }
 
-    res.status(200);
-    return res.json({ comments });
-
+    
+    existingComment.commentBody = comment;
+    
+    await existingComment.save();
+    
+    return res.json(existingComment);
   } catch (error) {
     next(error);
   }
-})
+});
 
 
 
-//ROUTE TO LEAVE A COMMENTS
-router.post('/:question',requireAuth, validateComment, async (req, res, next) => {
+// Route to get all comments written by the current user
+router.get('/current', requireAuth, async (req, res, next) => {
   try {
-
     const userId = req.user.id;
-    const { body } = req.body;
+    const comments = await Comment.findAll({
+      where: { userId },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: Question,
+          attributes: ['id', 'userId', 'title', 'questionBody'],
+          include: [
+            {
+              model: QuestionImage,
+              attributes: ['url'],
+            }
+          ]
+        },
+      ]
+    });
 
-    const comment = await Comment.create({ 
-        userId: parseInt(userId),
-        body }); 
+    // Formatting the reviews to make it pretty
+    const formattedComments = comments.map(comment => {
+      const commentData = comment.toJSON();
+      if (commentData.Question && commentData.Question.QuestionImages && commentData.Question.QuestionImages.length > 0) {
+        commentData.Question.previewImage = commentData.Question.QuestionImages[0].url;
+      } else {
+        commentData.Question.previewImage = null;
+      }
+      delete commentData.Question.QuestionImages;
+      return commentData;
+    });
 
-        res.status(200);
-      return res.json(comment);
-
-  } catch (e) {
-    next(e)
+    return res.json({ Comments: formattedComments });
+  } catch (error) {
+    next(error);
   }
-}
-);
+});
 
 
 
