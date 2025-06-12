@@ -12,28 +12,28 @@ module.exports = {
       {
         userId: 1,
         questionId: 1,
-        commnetBody: 'Such a lovely place to stay at',
+        commentBody: 'James Cameron directed Avatar',
       },
       {
         userId: 2,
         questionId: 2,
-        commnetBody: 'had fun staying at this place',
+        commentBody: 'Andy Weir',
       }, {
         userId: 3,
         questionId: 3,
-        commnetBody: 'dificult to find a parking spot but enjoyed the stay',
+        commentBody: 'The Milky Way moves at about about 1.89 million km/h',
       }, {
         userId: 1,
         questionId: 4,
-        commnetBody: 'the heat was not working, do not recommend!!',
+        commentBody: 'A base model starts at $5000, mid-range is $500,000 and industrial grade is $10 million',
       }, {
         userId: 2,
         questionId: 5,
-        commnetBody: 'got to create so many memories with my family, will definitely come back',
+        commentBody: 'So in my view, King’s writing advice is an echo of high school English class by someone who has not kept up with linguistic studies of English grammar, and still follows a prescriptive rather than descriptive attitude toward writing. There’s nothing wicked about this — most of us remain the victims of our worst teachers all our lives. And we pass on whatever nonsense we believed. But King’s self-story is FAR more valuable, because it is not prescriptive at all. He simply tells us what happened and why, and that’s true storytelling.',
       }, {
         userId: 3,
         questionId: 5,
-        commnetBody: 'the owner did not cooperate at all, were up all night in cold',
+        commentBody: 'The first movie was released in 1984',
       },
     ], { validate: true });
   },

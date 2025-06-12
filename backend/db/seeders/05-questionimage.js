@@ -1,6 +1,6 @@
 'use strict';
 
-const { SpotImage } = require('../models');
+const { QuestionImage } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -12,27 +12,27 @@ module.exports = {
     await QuestionImage.bulkCreate([
       {
         questionId: 1,
-        url: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
+        url: "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*sfOToFJa35tWms48BWzpfg.jpeg",
         preview: true
       },
       {
         questionId: 2,
-        url: "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg",
+        url: "https://m.media-amazon.com/images/I/81zD9kaVW9L._SL1500_.jpg",
         preview: true
       },
       {
         questionId: 3,
-        url: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
+        url: "https://starwalk.space/gallery/images/milky-way-faq/1140x641.jpg",
         preview: true
       },
       {
         questionId: 4,
-        url: "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg",
+        url: "https://static.scientificamerican.com/dam/m/653f47689d1d0828/original/d-wave_annealing_quantum_computer_prototype.jpg?m=1741813678.273&w=900",
         preview: true
       },
       {
         questionId: 5,
-        url: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg",
+        url: "https://devontrevarrowflaherty.com/wp-content/uploads/2020/04/on-writing.jpg",
         preview: true
       },
 

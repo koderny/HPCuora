@@ -256,7 +256,7 @@ router.delete('/:questionId', requireAuth, async (req, res, next) => {
 
 
 //LEAVE A COMMENT BASED ON A QUESTION ID
-router.post('/:questionId/comment', requireAuth, validateComment, async (req, res, next) => {
+router.post('/:questionId/comment', requireAuth, async (req, res, next) => {
     try {
 
         const { questionId } = req.params; //from Question table

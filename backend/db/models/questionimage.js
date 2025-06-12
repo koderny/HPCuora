@@ -39,7 +39,14 @@ module.exports = (sequelize) => {
         preview: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        }
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            onUpdate: DataTypes.NOW,
+        },
     },
         {
             sequelize,

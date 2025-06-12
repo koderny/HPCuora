@@ -1,5 +1,5 @@
 'use strict';
-const { Review } = require('../models');
+const { SavedQuestion } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {

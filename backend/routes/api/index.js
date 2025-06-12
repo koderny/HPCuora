@@ -5,7 +5,7 @@ const usersRouter = require('./users.js');
 const sessionRouter = require('./session.js');
 const commentsRouter = require('./comments.js');
 const questionsRouter = require('./questions.js');
-const questionImagesRouter = require('./questionImages.js')
+const questionImagesRouter = require('./questionimage.js')
 
 
 

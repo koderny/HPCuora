@@ -12,28 +12,28 @@ module.exports = {
       {
         userId: 1,
         title: "Movies",
-        questionBody: 'How old is planet earth?',
+        questionBody: 'Who directed Avatar?',
       },
       {
         userId: 2,
         title: "books",
-        questionBody: 'had fun staying at this place',
+        questionBody: 'Who wrote Project Hail Mary?',
       }, {
         userId: 3,
-        title: "books",
-        questionBody: 'dificult to find a parking spot but enjoyed the stay',
+        title: "Science",
+        questionBody: 'How fast is the milky way moving accross the universe?',
       }, {
         userId: 1,
-        title: "music",
-        questionBody: 'the heat was not working, do not recommend!!',
+        title: "Technology",
+        questionBody: 'What is the price of a quantum computer in 2025?',
       }, {
         userId: 2,
         title: "books",
-        questionBody: 'got to create so many memories with my family, will definitely come back',
+        questionBody: "What do you think of Stephen King's book 'On Writing'?",
       }, {
         userId: 3,
-        title: "music",
-        questionBody: 'the owner did not cooperate at all, were up all night in cold',
+        title: "Movies",
+        questionBody: 'In what year was the movie Terminator released?',
       },
     ], { validate: true });
   },

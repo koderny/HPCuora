@@ -28,16 +28,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
-      savedAt: {
+      createdAt: {
         type: DataTypes.DATE,
       },
+      updatedAt: {
+        type: DataTypes.DATE,
+        onUpdate: DataTypes.NOW,
+    },
     },
      {
       sequelize,
       modelName: 'SavedQuestion',
       defaultScope: {
         attributes: {
-          //  exclude: ['createdAt', 'updatedAt'],
+           exclude: ['createdAt', 'updatedAt'],
         },
       },
     }

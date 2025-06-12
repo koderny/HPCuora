@@ -16,12 +16,9 @@ module.exports = {
       },
       questionId: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         unique: true,
         allowNull: false,
-        references: {
-          model: "Users",
-          key: "id"
-        }
       },
       url: {
         type: Sequelize.STRING(500),
@@ -31,7 +28,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         default: false
       },
-      savedAt: {
+       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')

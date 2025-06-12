@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true
       },
       commentBody: {
-        types: DataTypes.STRING(2000),
+        type: DataTypes.STRING(2000),
         allowNull: false
       },
       createdAt: {
