@@ -12,62 +12,71 @@ const { check } = require('express-validator');
 const { User, Comment, Question, QuestionImage } = require('../../db/models');
 
 const validateQuestion = [
-    check('body')
-        .exists({ checkFalsy: true })
-        .withMessage('Question is required'),
+  check('body')
+    .exists({ checkFalsy: true })
+    .withMessage('Question is required'),
 ]
 
 //GET ALL QUESTIONS
 router.get('/', async (req, res, next) => {
-    try {
-        const questions = await Question.findAll({
-            attributes: ["id", "userId", "title", "questionBody"],
-            include: [
-                {
-                    model: QuestionImage
-                }
-            ]
-        });
+  try {
+    const questions = await Question.findAll({
+      attributes: ["id", "userId", "title", "questionBody"],
+      include: [
+        {
+          model: QuestionImage,
+          as: 'questionImage',
+        },
+        {
+          model: User,
+          as: "author",
+        },
+        {
+          model: Comment,
+          as: "comments"
+        }
+      ]
+    });
 
-        const prettyQuestions = [];
+    const prettyQuestions = [];
 
-        for (let question of questions) {
-            const questionObj = await question.toJSON();
-            console.log(questionObj)
+    for (let question of questions) {
+      const questionObj = await question.toJSON();
+      console.log(questionObj)
 
-            // Get the questionImage
-            let previewImageUrl = null;
-            if (questionObj.QuestionImages && questionObj.QuestionImages.length > 0) {
-                for (let previewImage of questionObj.QuestionImages) {
-                    if (previewImage.preview === true) {
-                        previewImageUrl = previewImage.url;
-                        break;
-                    }
-                }
-
-                if (!previewImageUrl) {
-                    previewImageUrl = questionObj.QuestionImages[0].url;
-                }
-            }
-
-
-            questionObj.previewImage = previewImageUrl;
-            delete questionObj.QuestionImages;
-            prettyQuestions.push(questionObj)
-
+      // Get the questionImage
+      let previewImageUrl = null;
+      if (questionObj.QuestionImages && questionObj.QuestionImages.length > 0) {
+        for (let previewImage of questionObj.QuestionImages) {
+          if (previewImage.preview === true) {
+            previewImageUrl = previewImage.url;
+            break;
+          }
         }
 
-        return res.json({ Questions: prettyQuestions });
-    } catch (e) {
-        next(e);
+        if (!previewImageUrl) {
+          previewImageUrl = questionObj.QuestionImages[0].url;
+        }
+      }
+
+
+      questionObj.previewImage = previewImageUrl;
+      delete questionObj.QuestionImages;
+      prettyQuestions.push(questionObj)
+
     }
+
+    return res.json({ Questions: prettyQuestions });
+  } catch (e) {
+    next(e);
+  }
 });
 
 
 //CREATE A QUESTION
 router.post('/', requireAuth, validateQuestion, async (req, res, next) => {
   try {
-    const { title, questionBody, previewImgUrl  } = req.body
+    const { title, questionBody, previewImgUrl } = req.body
 
     const newQuestion = await Question.create({
       userId: req.user.id, title, questionBody
@@ -90,6 +99,38 @@ router.post('/', requireAuth, validateQuestion, async (req, res, next) => {
   }
 });
 
+
+//GET Current user questions
+router.get('/current', requireAuth, async (req, res, next) => {
+  console.log("current triggered")
+  try {
+
+    const userId = req.user.id;
+    const questions = await Question.findAll({
+      where: {
+        userId: parseInt(userId)
+      },
+      attributes: ['id', 'userId', 'title', 'questionBody'],
+      include: [
+        {
+          model: User,
+          as: "author",
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+          model: QuestionImage,
+          as: "questionImage",
+          attributes: ['url', 'preview']
+        }
+      ]
+    });
+
+    return res.status(200).json(questions);
+  } catch (error) {
+    next(error);
+  }
+});
+
 //GET QUESTION BY ID
 
 router.get('/:id', async (req, res, next) => {
@@ -98,10 +139,11 @@ router.get('/:id', async (req, res, next) => {
       {
         include: [{
           model: QuestionImage,
-          attributes: ['questionId', 'url', 'preview']
+          as: "questionImage",
+          attributes: ['questionId', 'url', 'preview', "id"]
         }, {
           model: User,
-          as: "User",
+          as: "author",
           attributes: ['id', 'firstName', 'lastName']
         }]
       });
@@ -118,34 +160,6 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-
-//GET QUESTIONS BY USER ID
-router.get('/current', requireAuth, async (req, res, next) => {
-  try {
-
-    const userId = req.user.id;
-    const questions = await Question.findAll({
-      where: {
-        userId: parseInt(userId)
-      },
-      attributes: ['id', 'userId', 'title', 'questionBody'],
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'firstName', 'lastName']
-        },
-        {
-            model: QuestionImage,
-            attributes: ['url', 'preview']
-        }
-      ]
-    });
-
-    return res.status(200).json(questions);
-  } catch (error) {
-    next(error);
-  }
-});
 
 
 // EDIT/UPDATE A QUESTION
@@ -198,19 +212,9 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
       throw invalidQuestionId;
     }
 
-    if (existingQuestion.userId !== userId){
-        const error = new Error('Forbidden')
-        error.status = 403
-        throw error;
-    }
-
-    const existingImage = await QuestionImage.findOne({
-      where: { questionId: questionId }
-    });
-
-    if (existingImage) {
-      const error = new Error('Question already has an image.');
-      error.status = 400;
+    if (existingQuestion.userId !== userId) {
+      const error = new Error('Forbidden')
+      error.status = 403
       throw error;
     }
 
@@ -230,54 +234,54 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
 
 // DELETE A QUESTION
 router.delete('/:questionId', requireAuth, async (req, res, next) => {
-    try {
-        const { questionId } = req.params;
-        const userId = req.user.id;
-        const question = await Question.findByPk(questionId);
-        
-        if (!question) {
-            const err = new Error("Question couldn't be found");
-            err.status = 404;
-            throw err;
-        }
-        
-        if (question.userId !== userId) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            throw err;
-        }
-        
-        await question.destroy();
-        return res.json({ message: "Successfully deleted" });
-    } catch (e) {
-        next(e);
+  try {
+    const { questionId } = req.params;
+    const userId = req.user.id;
+    const question = await Question.findByPk(questionId);
+
+    if (!question) {
+      const err = new Error("Question couldn't be found");
+      err.status = 404;
+      throw err;
     }
+
+    if (question.userId !== userId) {
+      const err = new Error('Forbidden');
+      err.status = 403;
+      throw err;
+    }
+
+    await question.destroy();
+    return res.json({ message: "Successfully deleted" });
+  } catch (e) {
+    next(e);
+  }
 });
 
 
 //LEAVE A COMMENT BASED ON A QUESTION ID
 router.post('/:questionId/comment', requireAuth, async (req, res, next) => {
-    try {
+  try {
 
-        const { questionId } = req.params; //from Question table
-        const userId = req.user.id;
-        const { commentbody } = req.body; //from Comment table
+    const { questionId } = req.params; //from Question table
+    const userId = req.user.id;
+    const { commentBody } = req.body; //from Comment table
 
-        const question = Question.findByPk(questionId);
+    const question = Question.findByPk(questionId);
 
-        if (!Question) {
-            let noResourceError = new Error("Question couldn't be found");
-            noResourceError.status = 404;
-            throw noResourceError;
-        }
-
-        const comment = await Comment.create({ userId, questionId, commentbody });
-        res.status(200);
-        return res.json(comment);
-
-    } catch (e) {
-        next(e)
+    if (!question) {
+      let noResourceError = new Error("Question couldn't be found");
+      noResourceError.status = 404;
+      throw noResourceError;
     }
+
+    const comment = await Comment.create({ userId, questionId, commentBody });
+    res.status(200);
+    return res.json(comment);
+
+  } catch (e) {
+    next(e)
+  }
 }
 );
 
@@ -301,6 +305,7 @@ router.get('/:id/comments', async (req, res, next) => {
       include: [
         {
           model: User,
+          as: "commenter",
           attributes: ["id", "firstName", "lastName"]
 
         },

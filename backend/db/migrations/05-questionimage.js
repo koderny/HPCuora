@@ -17,7 +17,6 @@ module.exports = {
       questionId: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
-        unique: true,
         allowNull: false,
       },
       url: {

@@ -18,7 +18,6 @@ module.exports = (sequelize) => {
     QuestionImage.init({
         questionId: {
             type: DataTypes.INTEGER,
-            unique: true,
             allowNull: false
         },
         url: {

@@ -1,11 +1,12 @@
+// frontend/src/App.jsx
+
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
-import Home from './components/Home';
-import SpotDetails from './components/SpotDetails';
-import CreateASpot from './components/CreateASpot/CreateASpot';
+import AllQuestions from './components/AllQuestions';
+
 
 function Layout() {
   const dispatch = useDispatch();
@@ -31,19 +32,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
-      },
-      {
-        path: '/spots/:id',
-        element: <SpotDetails />
-      },
-      {
-        path: 'spots/new',
-        element: <CreateASpot />
+        element: <AllQuestions/>
       },
       // {
-      //   path: "spots/current",
-      //   element: <UserSpots />
+      //   path: "signup",
+      //   element: <SignupFormPage />
       // }
     ]
   }

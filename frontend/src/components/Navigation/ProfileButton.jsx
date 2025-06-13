@@ -5,8 +5,6 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import './ProfileButton.css'
-
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -40,11 +38,6 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  // const navigate = useNavigate();
-  //   const goToManageSpots = () => {
-  //     navigate('/spots/current')
-  //   }
-
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -54,18 +47,14 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <div>
-            <div>
-              <h4>Hello, {user.username}</h4>
-              <h4>{user.email}</h4>
-            </div>
-            {/* <div>
-              <button onClick={goToManageSpots}>Manage Spots</button>
-            </div> */}
-            <div>
+          <>
+            <li>{user.username}</li>
+            <li>{user.firstName} {user.lastName}</li>
+            <li>{user.email}</li>
+            <li>
               <button onClick={logout}>Log Out</button>
-            </div>
-          </div>
+            </li>
+          </>
         ) : (
           <>
             <OpenModalMenuItem

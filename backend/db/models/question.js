@@ -22,6 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'savedByUsers',
         hooks: true
       });
+      Question.hasMany(models.QuestionImage, {
+        foreignKey: 'questionId',
+        as: 'questionImage',
+        hooks: true
+      });
     }
   }
   Question.init({
@@ -37,10 +42,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(2000),
       allowNull: false
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
     },
-    updated_at: {
+    updatedAt: {
       type: DataTypes.DATE,
       onUpdate: DataTypes.NOW,
     },

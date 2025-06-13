@@ -63,17 +63,19 @@ router.get('/current', requireAuth, async (req, res, next) => {
       include: [
         {
           model: User,
+          as: "commenter",
           attributes: ['id', 'firstName', 'lastName']
         },
         {
           model: Question,
-          attributes: ['id', 'userId', 'title', 'questionBody'],
-          include: [
-            {
-              model: QuestionImage,
-              attributes: ['url'],
-            }
-          ]
+          as: "question",
+          attributes: ['id', 'userId', 'title', 'questionBody']
+          // include: [
+          //   {
+          //     model: QuestionImage,
+          //     attributes: ['url'],
+          //   }
+          // ]
         },
       ]
     });

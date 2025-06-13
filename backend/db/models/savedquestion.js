@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     questionId: {
       type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
       },
       createdAt: {
         type: DataTypes.DATE,

@@ -31,7 +31,12 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
             throw error;
         }
 
-        await questionImage.destroy();
+        // await questionImage.destroy();
+        await QuestionImage.destroy({
+            where: {
+                id: imageId
+            }
+        })
 
         res.status(200);
         return res.json({ message: "Successfully deleted" });

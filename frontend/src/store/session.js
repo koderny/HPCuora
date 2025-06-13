@@ -76,7 +76,9 @@ export const signup = (user) => async (dispatch) => {
 // ----REDUCER----
 
 
-const initialState = { user: null };
+const initialState = { 
+    user: null 
+};
 
 const sessionReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -1,3 +1,5 @@
+// frontend/src/main.jsx
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -7,7 +9,6 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { Modal, ModalProvider } from './context/Modal';
-
 
 const store = configureStore();
 
