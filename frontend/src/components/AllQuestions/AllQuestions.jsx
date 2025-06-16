@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import './AllQuestions.css';
+import './AllQuestions.css';
 import QuestionCard from './QuestionCard';
 import { useEffect, useState } from 'react';
 import { getAllQuestionsThunk } from '../../store/question';

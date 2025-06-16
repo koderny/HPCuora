@@ -145,7 +145,12 @@ router.get('/:id', async (req, res, next) => {
           model: User,
           as: "author",
           attributes: ['id', 'firstName', 'lastName']
-        }]
+        },
+        {
+          model: Comment,
+          as: "comments",
+        }
+      ]
       });
 
     if (!question) {

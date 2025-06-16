@@ -1,0 +1,17 @@
+#product-card {
+    display: flex;
+    flex-direction: column;
+    height: 22rem;
+    width: 20rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+
+#question-card-image {  
+    height: 15rem;
+    object-fit: cover;
+    transition: filter .1s ease-in;
+    z-index: 0;
+}
