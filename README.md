@@ -4,6 +4,6 @@
 
 ![db-schema]
 
-[db-schema]: ./images/dbdiagram.png
+[db-schema]: ./images/HPCuora.png
 
 ## API Documentation

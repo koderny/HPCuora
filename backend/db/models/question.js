@@ -34,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    title: {
-      type: DataTypes.STRING(50),
-      allowNull: false
-    },
     questionBody: {
       type: DataTypes.STRING(2000),
       allowNull: false

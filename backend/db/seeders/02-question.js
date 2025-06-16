@@ -11,28 +11,22 @@ module.exports = {
     await Question.bulkCreate([
       {
         userId: 1,
-        title: "Movies",
-        questionBody: 'Who directed Avatar?',
+        questionBody: 'Who directed Avatar?'
       },
       {
         userId: 2,
-        title: "books",
-        questionBody: 'Who wrote Project Hail Mary?',
+        questionBody: 'Who wrote Project Hail Mary?'
       }, {
         userId: 3,
-        title: "Science",
         questionBody: 'How fast is the milky way moving accross the universe?',
       }, {
         userId: 1,
-        title: "Technology",
         questionBody: 'What is the price of a quantum computer in 2025?',
       }, {
         userId: 2,
-        title: "books",
         questionBody: "What do you think of Stephen King's book 'On Writing'?",
       }, {
         userId: 3,
-        title: "Movies",
         questionBody: 'In what year was the movie Terminator released?',
       },
     ], { validate: true });

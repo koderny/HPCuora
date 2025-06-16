@@ -8,6 +8,8 @@ import { getAllQuestionsThunk } from '../../store/question';
 
 const AllQuestions = () => {
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
+    console.log(sessionUser)
     const questions = useSelector((state) => state.questions.allQuestions);
     console.log(questions, "questions")
 
@@ -30,7 +32,7 @@ const AllQuestions = () => {
             {questions && questions.length ? questions.map((question, i) => {
                 return (
                     <div key={`${i}-${question.id}`}>
-                        <QuestionCard {...question} />
+                        <QuestionCard {...question} loggedIn={sessionUser?.id} />
                     </div>
             )
         }) : ''}

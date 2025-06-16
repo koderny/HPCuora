@@ -24,10 +24,6 @@ module.exports = {
         onDelete: "CASCADE"
 
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       questionBody: {
         type: Sequelize.STRING(2000),
         allowNull: false,

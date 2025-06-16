@@ -21,7 +21,7 @@ const validateQuestion = [
 router.get('/', async (req, res, next) => {
   try {
     const questions = await Question.findAll({
-      attributes: ["id", "userId", "title", "questionBody"],
+      attributes: ["id", "userId", "questionBody"],
       include: [
         {
           model: QuestionImage,
@@ -76,10 +76,10 @@ router.get('/', async (req, res, next) => {
 //CREATE A QUESTION
 router.post('/', requireAuth, validateQuestion, async (req, res, next) => {
   try {
-    const { title, questionBody, previewImgUrl } = req.body
+    const { questionBody, previewImgUrl } = req.body
 
     const newQuestion = await Question.create({
-      userId: req.user.id, title, questionBody
+      userId: req.user.id, questionBody
     });
 
     await QuestionImage.bulkCreate([
