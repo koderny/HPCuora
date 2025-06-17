@@ -29,17 +29,17 @@ const AllQuestions = () => {
     if (isLoaded) {
         return (
             <div id='all-questions'>
-            {questions && questions.length ? questions.map((question, i) => {
-                return (
-                    <div key={`${i}-${question.id}`}>
-                        <QuestionCard {...question} loggedIn={sessionUser?.id} />
-                    </div>
-            )
-        }) : ''}
-        </div>
-    )
-}
-else return <h1>Loading...</h1>;
+                {questions && questions.length ? questions.map((question, i) => {
+                    return (
+                        <div key={`${i}-${question.id}`}>
+                            <QuestionCard {...question} loggedIn={sessionUser?.id} />
+                        </div>
+                    )
+                }) : ''}
+            </div>
+        )
+    }
+    else return <h1>Loading...</h1>;
 }
 
 

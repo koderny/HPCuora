@@ -6,6 +6,7 @@ const HomePage = () => {
     <div>
         <CreateQuestion/>
         <AllQuestions/>
+        
     </div>
   )
 }

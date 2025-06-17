@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { createAQuestionThunk } from '../../store/question';
+import './CreateQuestion.css';
 
 
 const CreateQuestion = () => {
@@ -35,9 +36,9 @@ const CreateQuestion = () => {
     }
     }
   return (
-    <div>
+    <div id="create-question-items">
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder='What do you want to ask or share?' onChange={handleChange} />
+            <input id="input-box" type="text" placeholder='What do you want to ask or share?' onChange={handleChange} />
             <button type="submit" >Ask a question</button>
         </form>
     </div>

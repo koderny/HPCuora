@@ -1,8 +1,8 @@
-#all-questions img {
+#question-details img {
     width: 600px;
 }
 
-#all-questions {
+#question-detail-box {
      width: 600px; 
   margin: 0 auto; 
   background-color: #fff; 
