@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">HPCuora</NavLink>
       </li>
       {isLoaded && (
         <li>

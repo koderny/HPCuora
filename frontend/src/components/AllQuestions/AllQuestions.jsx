@@ -29,7 +29,7 @@ const AllQuestions = () => {
     if (isLoaded) {
         return (
             <div id='all-questions'>
-                {questions && questions.length ? questions.map((question, i) => {
+                {questions && questions.length ? questions.slice().reverse().map((question, i) => {
                     return (
                         <div key={`${i}-${question.id}`}>
                             <QuestionCard {...question} loggedIn={sessionUser?.id} />

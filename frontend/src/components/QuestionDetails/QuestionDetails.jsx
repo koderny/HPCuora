@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getAQuestionThunk } from '../../store/question';
 import './QuestionDetails.css';
+import CommentCard from '../CommentCard/CommentCard';
 
 const QuestionDetails = () => {
     const {id} = useParams();
@@ -10,7 +11,7 @@ const QuestionDetails = () => {
 
     useEffect(()=> {
         dispatch(getAQuestionThunk(id));
-    },[])
+    },[dispatch, id])
 
     const question = useSelector(state => state.questions.byId[id])
     console.log(question)
@@ -24,19 +25,16 @@ const QuestionDetails = () => {
         <h1>{question.questionBody}</h1>
         
         <div id="question-details">
-        {question.questionImage.map((image, id) => (
+        {question?.questionImage?.map((image, id) => (
             <img src={image.url} key={id}/>
         ))}
         </div>
         
-        {question.comments.map((comment, id) => (
-            <div className="comment" key={id}>
-                <p>{comment.commentBody}</p>
-            </div>
+        {question?.comments?.map((comment, id) => (
+            <CommentCard {...comment} />
         ))}
     </div>
   )
 }
 
 export default QuestionDetails;
-

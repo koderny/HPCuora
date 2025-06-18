@@ -6,11 +6,15 @@ import './CreateQuestion.css';
 
 const CreateQuestion = () => {
     const dispatch = useDispatch();
-    const [formData, setFormData] = useState("");
+    const [formData, setFormData] = useState({
+        questionBody: '',
+        previewImgUrl: ''
+    });
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (event) => {
-        setFormData(event.target.value)
+        // setFormData(event.target.value)
+        setFormData(previous => ({...previous, [event.target.name]: event.target.value }))
 
         if(errorMessage) {
             setErrorMessage("");
@@ -26,10 +30,8 @@ const CreateQuestion = () => {
         setErrorMessage("");
         try {
             await dispatch(createAQuestionThunk(
-                {
-                   questionBody: formData,
-                   previewImgUrl: ""
-            }))
+            formData   
+            ))
         } catch (error) {
             console.error(error)
         }
@@ -38,7 +40,8 @@ const CreateQuestion = () => {
   return (
     <div id="create-question-items">
         <form onSubmit={handleSubmit}>
-            <input id="input-box" type="text" placeholder='What do you want to ask or share?' onChange={handleChange} />
+            <input id="input-box" type="text" name='questionBody' placeholder='What do you want to ask or share?' onChange={handleChange} />
+            <input type="text" name='previewImgUrl' placeholder='https://miro.medium.com/v2/resize:fit:4800/format:webp/1*sfOToFJa35tWms48BWzpfg.jpeg' onChange={handleChange} />
             <button type="submit" >Ask a question</button>
         </form>
     </div>

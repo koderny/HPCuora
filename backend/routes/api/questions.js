@@ -91,8 +91,27 @@ router.post('/', requireAuth, validateQuestion, async (req, res, next) => {
 
     ])
 
+    const newQuestionWithAssociation = await Question.findByPk(newQuestion.id,
+      {
+        include: [
+          {
+            model: QuestionImage,
+            as: 'questionImage',
+          },
+          {
+            model: User,
+            as: "author",
+          },
+          {
+            model: Comment,
+            as: "comments"
+          }
+        ]
+      }
+    )
+
     res.status(201);
-    return res.json(newQuestion);
+    return res.json(newQuestionWithAssociation);
 
   } catch (e) {
     next(e);
@@ -150,7 +169,7 @@ router.get('/:id', async (req, res, next) => {
           model: Comment,
           as: "comments",
         }
-      ]
+        ]
       });
 
     if (!question) {

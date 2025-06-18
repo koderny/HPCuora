@@ -32,7 +32,7 @@ module.exports = {
         commentBody: 'So in my view, King’s writing advice is an echo of high school English class by someone who has not kept up with linguistic studies of English grammar, and still follows a prescriptive rather than descriptive attitude toward writing. There’s nothing wicked about this — most of us remain the victims of our worst teachers all our lives. And we pass on whatever nonsense we believed. But King’s self-story is FAR more valuable, because it is not prescriptive at all. He simply tells us what happened and why, and that’s true storytelling.',
       }, {
         userId: 3,
-        questionId: 5,
+        questionId: 6,
         commentBody: 'The first movie was released in 1984',
       },
     ], { validate: true });

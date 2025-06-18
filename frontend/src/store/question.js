@@ -96,7 +96,8 @@ export const createAQuestionThunk = (question) => async (dispatch) => {
 };
 
 //UPDATE A QUESTION
-export const updateQuestionThunk = (questionId, question) => async (dispatch) => {
+export const updateAQuestionThunk = (questionId, question) => async (dispatch) => {
+    console.log(questionId, question)
     try {
 
         const response = await csrfFetch(`/api/questions/${questionId}`, {

@@ -1,38 +1,39 @@
 import './CommentCard.css';
 import { useModal } from '../../context/Modal'
-import UpdateCommentModal from '../AllQuestions/UpdateAComment';
+// import UpdateCommentModal from '../AllQuestions/UpdateAComment';
 import { useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
 
 
-const CommentCard = ({ comment, questionId }) => {
+const CommentCard = ({ id, commentBody, questionId, userId, updatedAt }) => {
+
     const { setModalContent } = useModal();
     const currentUser = useSelector((state) => state.session.user)
+    console.log(currentUser)
     const commentDate = (commentDate) => {
-        const splCommentDate = [];
-        splCommentDate = commentDate.split(' ');
-        const constructedCommentDate =
-        `${splCommentDate[2]} ${splCommentDate[1]}, ${splCommentDate[3]}`
-        return constructedCommentDate;
+
+        const date = new Date(commentDate);
+        const formattedDate = date.toLocaleString();
+        return formattedDate;
     }
 
     return (
         <div id='comment-card'>
-        
-            <span style={{fontSize: '1.1rem'}}>{comment.comment}</span>
-                
+
+            <span> {commentBody}</span>
+
             <div id="comment-card-comment-user-date-container">
-                <span className="comment-card-comment-user-date">
+                {/* <span className="comment-card-comment-user-date">
                     {comment.user.firstName} {comment.user.lastName}
-                </span>
+                </span> */}
                 <span className='comment-card-comment-user-date'>
-                    {commentDate(comment.updated_at)}
+                    {commentDate(updatedAt)}
                 </span>
             </div>
-            { currentUser && currentUser.id === comment.user.id && (
+            { currentUser && currentUser.id === userId && (
                 <div id='comment-card-buttons'>
-                <button
+                {/* <button
                     className='update-delete-button'
                     onClick={() =>
                         setModalContent(
@@ -44,11 +45,11 @@ const CommentCard = ({ comment, questionId }) => {
                     }
                 >
                     Edit
-                </button>
+                </button> */}
                 <OpenModalButton
                         buttonText="Delete"
                         buttonClassName="delete-btn"
-                    modalComponent={<DeleteCommentModal commentId={comment.id} />}
+                    modalComponent={<DeleteCommentModal commentId={id} />}
                 />
                </div>
                 )}
@@ -57,3 +58,4 @@ const CommentCard = ({ comment, questionId }) => {
 }
 
 export default CommentCard;
+

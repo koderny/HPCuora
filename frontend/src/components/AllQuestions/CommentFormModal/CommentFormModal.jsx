@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useModal } from "../../../context/Modal"
-import { createACommentThunk, getAllCommentsThunk } from "../../store/comments"
+import { createACommentThunk, getAllCommentsThunk } from "../../store/comment"
 import "./CommentFormModal.css"
-import { getAQuestionThunk } from "../../store/questions"
+import { getAQuestionThunk } from "../../store/question"
 
 
 
-const CommentFormModal = ({ productId }) => {
+const CommentFormModal = ({ questionId }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const [commentBody, setCommentBody] = useState("");
@@ -70,7 +70,7 @@ const CommentFormModal = ({ productId }) => {
         <hr id="comment-form-line"></hr>
 
         {serverError && <p className="error-message">{serverError}</p>}
-        {errors.review && <p className="error-message">{errors.commentBody}</p>}
+        {errors.comment && <p className="error-message">{errors.commentBody}</p>}
         
 
         <form onSubmit={handleSubmit} id="comment-form-form">

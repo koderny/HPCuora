@@ -1,3 +1,4 @@
+import { csrfFetch } from "./csrf";
 
 //ACTION TYPES 
 const CREATE_A_COMMENT = "reviews/createAComment"
@@ -104,7 +105,7 @@ export const updateACommentThunk = (commentId, comment) => async (dispatch) => {
 //DELETE A COMMENT
 export const deleteACommentThunk = (commentId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/comments/${commentId}`, {
+        const res = await csrfFetch(`/api/comments/${commentId}`, {
             method: "DELETE",
         });
 
