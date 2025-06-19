@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { getAQuestionThunk } from '../../store/question';
 import './QuestionDetails.css';
 import CommentCard from '../CommentCard/CommentCard';
+import CommentFormModal from '../AllQuestions/CommentFormModal';
+import UpdateCommentModal from '../AllQuestions/UpdateAComment';
 
 const QuestionDetails = () => {
     const {id} = useParams();
@@ -30,6 +32,7 @@ const QuestionDetails = () => {
         ))}
         </div>
         
+        <CommentFormModal questionId={question.id}/>
         {question?.comments?.map((comment, id) => (
             <CommentCard {...comment} />
         ))}

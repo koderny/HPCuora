@@ -99,6 +99,29 @@ router.get('/current', requireAuth, async (req, res, next) => {
 });
 
 
+router.delete('/:commentId', requireAuth, async (req, res, next) => {
+  try {
+    const {commentId} = req.params;
+    const userId = req.user.id;
+    const comment = await Comment.findByPk(commentId);
+    console.log(comment)
+    if (!comment) {
+      throw new Error ('Comment not found');
+
+    } 
+    console.log(userId, comment.userId)
+    if (userId !== comment.userId){
+      throw new Error ('Forbidden');
+    }
+
+    await comment.destroy();
+    return res.json({message: 'Comment deleted successfully'})
+
+
+    } catch (error) {
+    next(error);
+  }
+});
 
 
 module.exports = router;

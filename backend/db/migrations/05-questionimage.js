@@ -18,6 +18,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
+        reference: {model: 'Questions', key: 'id'},
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       url: {
         type: Sequelize.STRING(500),

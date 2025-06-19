@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useModal } from "../../../context/Modal"
-import { createACommentThunk, getAllCommentsThunk } from "../../store/comment"
 import "./CommentFormModal.css"
-import { getAQuestionThunk } from "../../store/question"
+import { createACommentThunk, getAllCommentsThunk } from "../../../store/comment"
+import { getAQuestionThunk } from "../../../store/question"
 
 
 

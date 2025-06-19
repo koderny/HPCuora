@@ -16,7 +16,7 @@ function UpdateAQuestion() {
     const question = useSelector((state) => state.questions.byId[id]);
     console.log(question)
     const [questionBody, setQuestionBody] = useState("");
-    const [questionImage, setQuestionImage] = useState(question.questionImage);
+    const [questionImage, setQuestionImage] = useState();
     
     const [previewImage, setPreviewImage] = useState({ preview: true, url: '' });
     // const [secondImage, setSecondImage] = useState({ preview: false, url: '' });

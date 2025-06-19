@@ -191,9 +191,11 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', requireAuth, validateQuestion, async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log(id, "question id")
     const userId = req.user.id;
-
+    const { questionBody, imageUrls = [] } = req.body;
     const existingQuestion = await Question.findByPk(id);
+
     if (!existingQuestion) {
       const error = new Error("Question couldn't be found");
       error.status = 404;
@@ -206,15 +208,32 @@ router.put('/:id', requireAuth, validateQuestion, async (req, res, next) => {
       throw error;
     }
 
-    const { title, questionBody } = req.body;
-
-    existingQuestion.title = title;
     existingQuestion.questionBody = questionBody;
 
 
     await existingQuestion.save();
+  
+    await QuestionImage.destroy({ where: {id}});
+    if(imageUrls.length > 0) {
+      const createImages = imageUrls.map((url, idx) => ({
+       questionId: id,
+       url,
+       preview: idx === 0 //true
+      }))
+      await QuestionImage.bulkCreate(createImages)
 
-    return res.status(200).json(existingQuestion);
+    }
+
+    const updatedQuestionWithImages = await Question.findByPk(id, {
+      include: [
+        {
+          model: QuestionImage,
+          as: 'questionImage'
+        }
+      ]
+    })
+
+    return res.status(200).json(updatedQuestionWithImages);
   } catch (error) {
     next(error);
   }

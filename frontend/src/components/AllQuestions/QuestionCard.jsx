@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteAQuestionThunk } from '../../store/question';
 import DeleteQuestionModal from '../DeleteQuestionModal';
 import CommentCard from '../CommentCard/CommentCard';
+import CommentFormModal from './CommentFormModal';
+
 
 
 const QuestionCard = ({ id, userId, questionBody, questionImage, author, loggedIn, comments }) => {
@@ -44,6 +46,7 @@ const QuestionCard = ({ id, userId, questionBody, questionImage, author, loggedI
                 {questionId !== null && (
                     <DeleteQuestionModal questionId = {questionId} setQuestionId={setQuestionId}/>
                 )}
+                {/* <CommentFormModal/> */}
                 {comments.map((comment) => (
                     <CommentCard {...comment} />
                 ))}

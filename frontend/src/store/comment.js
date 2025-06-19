@@ -36,7 +36,7 @@ const deleteAComment = (comment) => ({
 export const getAllCommentsThunk = (questionId) => async (dispatch) => {
 
     try {
-        const res = await fetch(`/api/comments/question/${questionId}`);
+        const res = await csrfFetch(`/api/comments/question/${questionId}`);
         if (res.ok) {
             const data = await res.json();
             if (data.errors) {
@@ -54,8 +54,9 @@ export const getAllCommentsThunk = (questionId) => async (dispatch) => {
 
 //CREATE A COMMENT
 export const createACommentThunk = (comment) => async (dispatch) => {
+    console.log(comment, "comment")
     try {
-        const res = await fetch("/api/comments/create", {
+        const res = await csrfFetch(`/api/questions/${comment.questionid}/comment`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -82,7 +83,7 @@ export const createACommentThunk = (comment) => async (dispatch) => {
 export const updateACommentThunk = (commentId, comment) => async (dispatch) => {
     try {
 
-        const response = await fetch(`/api/comments/${commentId}`, {
+        const response = await csrfFetch(`/api/comments/${commentId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(comment)
@@ -110,7 +111,9 @@ export const deleteACommentThunk = (commentId) => async (dispatch) => {
         });
 
         if (res.ok) {
+            const data = await response.json();
             dispatch(deleteAComment(commentId));
+            return data;
         } else {
             throw res;
         }
@@ -168,7 +171,6 @@ function commentReducer(state = initialState, action) {
             newState.byId = { ...state.byId };
             delete newState.byId[action.payload];
             return newState;
-d
 
         default:
             return state;

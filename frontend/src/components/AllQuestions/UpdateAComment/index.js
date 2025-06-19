@@ -1,2 +1,2 @@
-import UpdateCommentModal from "./AllComments";
+import UpdateCommentModal from "./UpdateCommentModal";
 export default UpdateCommentModal;

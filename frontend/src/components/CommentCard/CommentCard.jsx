@@ -4,6 +4,7 @@ import { useModal } from '../../context/Modal'
 import { useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import DeleteCommentModal from '../DeleteCommentModal';
+import UpdateCommentModal from '../AllQuestions/UpdateAComment';
 
 
 const CommentCard = ({ id, commentBody, questionId, userId, updatedAt }) => {
@@ -33,19 +34,20 @@ const CommentCard = ({ id, commentBody, questionId, userId, updatedAt }) => {
             </div>
             { currentUser && currentUser.id === userId && (
                 <div id='comment-card-buttons'>
-                {/* <button
+                <button
                     className='update-delete-button'
                     onClick={() =>
                         setModalContent(
-                            <UpdateReviewModal
-                                commentId={comment.id}
+                            <UpdateCommentModal
+                                commentId={id}
                                 questionId={questionId}
                             />
                         )
                     }
                 >
                     Edit
-                </button> */}
+                </button>
+                {/* <UpdateCommentModal commentId={}/> */}
                 <OpenModalButton
                         buttonText="Delete"
                         buttonClassName="delete-btn"
