@@ -31,8 +31,8 @@ const QuestionCard = ({ id, userId, questionBody, questionImage, author, loggedI
 
                     <div id='question-card-name-comment'>
                         <p className="question-card-body-text">{questionBody}</p>
-                       <p className="question-card-image">{questionImage?.map((image) => (
-                            <img src={image?.url} />
+                       <p className="question-card-image">{questionImage?.map((image, id) => (
+                            <img src={image?.url} key={id}/>
                         ))} </p>
 
                     </div>
@@ -47,8 +47,8 @@ const QuestionCard = ({ id, userId, questionBody, questionImage, author, loggedI
                     <DeleteQuestionModal questionId = {questionId} setQuestionId={setQuestionId}/>
                 )}
                 {/* <CommentFormModal/> */}
-                {comments.map((comment) => (
-                    <CommentCard {...comment} />
+                {comments.map((comment, id) => (
+                    <CommentCard {...comment} key={id}/>
                 ))}
             </div>
         </div>

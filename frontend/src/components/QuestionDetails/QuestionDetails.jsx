@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getAQuestionThunk } from '../../store/question';
 import './QuestionDetails.css';
 import CommentCard from '../CommentCard/CommentCard';
 import CommentFormModal from '../AllQuestions/CommentFormModal';
-import UpdateCommentModal from '../AllQuestions/UpdateAComment';
 
 const QuestionDetails = () => {
     const {id} = useParams();
@@ -34,7 +33,7 @@ const QuestionDetails = () => {
         
         <CommentFormModal questionId={question.id}/>
         {question?.comments?.map((comment, id) => (
-            <CommentCard {...comment} />
+            <CommentCard {...comment} key={id}/>
         ))}
     </div>
   )

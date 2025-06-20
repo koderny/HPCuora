@@ -111,7 +111,7 @@ export const deleteACommentThunk = (commentId) => async (dispatch) => {
         });
 
         if (res.ok) {
-            const data = await response.json();
+            const data = await res.json();
             dispatch(deleteAComment(commentId));
             return data;
         } else {

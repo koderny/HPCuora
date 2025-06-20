@@ -68,19 +68,19 @@ const UpdateCommentModal = ({ commentId, questionId }) => {
         comment.length <= 500;
 
         return (
-          <div id="review-form">
-            <h1 id="review-form-title">Edit Your Comment</h1>
-            <hr id="review-form-line"></hr>
+          <div id="comment-form">
+            <h1 id="comment-form-title">Edit Your Comment</h1>
+            <hr id="comment-form-line"></hr>
             {serverError && <p className="error-message">{serverError}</p>}
             {errors.comment && <p className="error-message">{errors.comment}</p>}
 
-            <form onSubmit={handleSubmit} id="review-form-form">
+            <form onSubmit={handleSubmit} id="comment-form-form">
               <textarea
                 placeholder="Leave your comment here"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 rows={6}
-                id="review-form-review"
+                id="comment-form-review"
               />
 
               <button

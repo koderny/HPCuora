@@ -3,39 +3,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { updateAQuestionThunk } from '../../store/question';
 
-// import './UpdateAQuestion.css';
-
 
 function UpdateAQuestion() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { id } = useParams();
-    // console.log(id, "id in update")
+    
     const sessionUser = useSelector((state) => state.session.user);
     const question = useSelector((state) => state.questions.byId[id]);
-    console.log(question)
-    const [questionBody, setQuestionBody] = useState("");
-    const [questionImage, setQuestionImage] = useState();
     
-    const [previewImage, setPreviewImage] = useState({ preview: true, url: '' });
-    // const [secondImage, setSecondImage] = useState({ preview: false, url: '' });
-    // const [thirdImage, setThirdImage] = useState({ preview: false, url: '' });
-    // const [fourthImage, setFourthImage] = useState({ preview: false, url: '' });
-    // const [fifthImage, setFifthImage] = useState({ preview: false, url: '' });
+    const [questionBody, setQuestionBody] = useState("");
+    const [imageUrls, setImageUrls] = useState([]);
+    const [errors, setErrors] = useState({});
 
-
+    //
     useEffect(() => {
 
         if (question) {
             setQuestionBody(question.questionBody);
-            // setQuestionImage([...questionImage, question.questionImage])
-            // setPreviewImage({ preview: true, url: question.questionImages ? question.questionImages[0].url : '' })
+            const urls= question.questionImage.map(image => image.url); 
+            setImageUrls([
+                urls[0] || '', 
+                urls[1] || '',
+                urls[2] || ''
+            ])
         
         }
     }, [question]);
 
-    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         const newErrors = {};
@@ -48,17 +44,20 @@ function UpdateAQuestion() {
             newErrors.questionBody = "Please keep your post under 2000 characters"
         }
 
-
-        if (
-            previewImage.url.length === 0
-        ) {
-            newErrors.questionImage = "Preview Image is required";
+        if(!imageUrls[0]?.trim()){
+            newErrors.imageUrls = 'At least one image is required'
         }
 
         setErrors(newErrors)
-    }, [questionBody, previewImage])
+    }, [questionBody, imageUrls])
 
     if (!sessionUser) return <Navigate to="/" replace={true} />;
+
+    const handleImageChange = (id, value) => {
+        const copyImages = [...imageUrls];
+        copyImages[id] = value;
+        setImageUrls(copyImages);
+    }
 
 
     const handleSubmit = async (e) => {
@@ -68,11 +67,12 @@ function UpdateAQuestion() {
         // thirdImage.url.length ? product_images.push({ url: thirdImage.url, preview: false }) : null
         // fourthImage.url.length ? product_images.push({ url: fourthImage.url, preview: false }) : null
         // fifthImage.url.length ? product_images.push({ url: fifthImage.url, preview: false }) : null
+        if(Object.keys(errors).length) return;
 
         const serverResponse = await dispatch(
             updateAQuestionThunk((id), {
                 questionBody,
-                questionImage
+                imageUrls
             })
         );
 
@@ -102,62 +102,45 @@ function UpdateAQuestion() {
                     />
                 </label>
                 
-                <label className='create-input'>
+                {/* <label className='create-input'>
                     Preview Product Image
-                    {/* <input className='input-container' placeholder="Preview Image URL" onChange={(e) => {
+                    <input className='input-container' placeholder="Preview Image URL" onChange={(e) => {
                         setPreviewImage({ preview: true, url: e.target.value })
                         // e.target.value.length ? setPreviewDisabled(false) : setPreviewDisabled(true)
                     }}
                         value={previewImage.url}
                         required
-                    /> */}
+                    />
                     {questionImage.map((question) => (
                         <input type='text' value={question.url}/>
                     ) )}
-                </label>
+                </label> */}
                 {errors.product_images && <p className="error-message">{errors.product_images}</p>}
-                {/* <label className='create-input'>
+                <label className='create-input'>
+                    Preview Image
+                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
+                        handleImageChange(0, e.target.value)
+                    }}
+                        value={imageUrls[0]}
+                    />
+                </label>
+                <label className='create-input'>
                     Image #2
                     <input className='input-container' placeholder="Image URL" onChange={(e) => {
-                        setSecondImage({ preview: false, url: e.target.value })
+                        handleImageChange(1, e.target.value)
                     }}
-                        value={secondImage.url}
+                        value={imageUrls[1]}
                     />
                 </label>
                 <label className='create-input'>
                     Image #3
                     <input className='input-container' placeholder="Image URL" onChange={(e) => {
-                        setThirdImage({ preview: false, url: e.target.value })
+                        handleImageChange(2, e.target.value)
                     }}
-                        value={thirdImage.url}
+                        value={imageUrls[2]}
                     />
                 </label>
-                <label className='create-input'>
-                    Image #4
-                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
-                        setFourthImage({ preview: false, url: e.target.value })
-                    }}
-                        value={fourthImage.url}
-                    />
-                </label>
-                <label className='create-input'>
-                    Image #5
-                    <input className='input-container' placeholder="Image URL" onChange={(e) => {
-                        setFifthImage({ preview: false, url: e.target.value })
-                    }}
-                        value={fifthImage.url}
-                    />
-                </label> */}
 
-                {/* {[previewImage, secondImage, thirdImage, fourthImage, fifthImage].map((image, i) => {
-                    return (
-                        <div key={`${image.url}-${i}`}>
-                            <b>{image.url.length ? image.preview == true ? 'Preview Image' : `Image #${i + 1}` : ''}</b>
-                            {image.url.length ? <img src={image.url} className="create-images"></img> : ''}
-                            <hr className="create-line"></hr>
-                        </div>
-                    )
-                })} */}
                 <button className="update-button-container" type="submit">Update Product</button>
 
 

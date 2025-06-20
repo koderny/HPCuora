@@ -213,7 +213,7 @@ router.put('/:id', requireAuth, validateQuestion, async (req, res, next) => {
 
     await existingQuestion.save();
   
-    await QuestionImage.destroy({ where: {id}});
+    await QuestionImage.destroy({ where: {questionId: id}});
     if(imageUrls.length > 0) {
       const createImages = imageUrls.map((url, idx) => ({
        questionId: id,

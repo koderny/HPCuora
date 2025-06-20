@@ -51,7 +51,7 @@ const CommentCard = ({ id, commentBody, questionId, userId, updatedAt }) => {
                 <OpenModalButton
                         buttonText="Delete"
                         buttonClassName="delete-btn"
-                    modalComponent={<DeleteCommentModal commentId={id} />}
+                    modalComponent={<DeleteCommentModal questionId={questionId} commentId={id} />}
                 />
                </div>
                 )}
