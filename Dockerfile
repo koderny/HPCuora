@@ -71,8 +71,6 @@ COPY --from=frontendbuild frontend/public ./dist/react-vite/public
 
 RUN npm install --only=production
 
-COPY --from=backendbuild backend/dist ./dist
-
 
 EXPOSE 8000
 CMD [ "npm", "start"]
