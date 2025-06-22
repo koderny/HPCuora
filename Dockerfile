@@ -25,7 +25,7 @@ RUN npm run build
 
 # Production level Image: Inherits from built api and frontend images
 FROM --platform=amd64 node:18-alpine as production
-WORKDIR /app
+WORKDIR /backend
 
 COPY --from=frontend-build /frontend/dist ./dist/hpcuora
 
