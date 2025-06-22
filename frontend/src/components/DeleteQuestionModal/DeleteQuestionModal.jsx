@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { useModal } from '../../context/Modal';
 import { deleteAQuestionThunk } from '../../store/question';
 import './DeleteQuestionModal.css';
-import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 

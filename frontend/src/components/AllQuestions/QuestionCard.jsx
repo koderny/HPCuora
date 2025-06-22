@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 // import './QuestionCard.css';
 import {  useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import DeleteQuestionModal from '../DeleteQuestionModal';
 import CommentCard from '../CommentCard/CommentCard';
 
@@ -10,8 +10,8 @@ import CommentCard from '../CommentCard/CommentCard';
 const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comments }) => {
 
     const [questionId, setQuestionId] = useState(null);
-    const dispatch = useDispatch();
-    const handleDelete = async (event) => {
+    // const dispatch = useDispatch();
+    const handleDelete = async () => {
     setQuestionId(id)
         // try {
         //     await dispatch(deleteAQuestionThunk(id))
