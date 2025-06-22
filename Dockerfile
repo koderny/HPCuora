@@ -33,5 +33,4 @@ COPY --from=frontend-build /frontend/public ./dist/hpcuora/public
 
 EXPOSE 8000
 
-CMD ["/bin/bash", "-c", "npm run db:reset && node bin/www"]
-
+CMD ["node", "bin/www"]
