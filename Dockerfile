@@ -1,14 +1,3 @@
-# Build for API. Converts Typescript into Javascript for production
-FROM --platform=amd64 node:18-alpine as backend-build
-
-WORKDIR /backend
-
-COPY backend/package*.json ./
-
-RUN npm install
-
-COPY backend/ ./
-
 # # Build for React. Converts TSX and React into a static html bundle
 FROM --platform=amd64 node:18-alpine AS frontend-build
 
@@ -22,10 +11,20 @@ COPY frontend/ ./
 
 RUN npm run build
 
+# Build for API. Converts Typescript into Javascript for production
+FROM --platform=amd64 node:18-alpine as production
+
+WORKDIR /backend
+
+COPY backend/package*.json ./
+
+RUN npm install
+
+COPY backend/ ./
+
+
 
 # Production level Image: Inherits from built api and frontend images
-FROM --platform=amd64 node:18-alpine as production
-WORKDIR /backend
 
 COPY --from=frontend-build /frontend/dist ./dist/hpcuora
 
