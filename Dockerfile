@@ -1,78 +1,27 @@
-# Build for API. Converts Typescript into Javascript for production
-FROM --platform=amd64 node:18-alpine as backendbuild
-
-WORKDIR /backend
-
-COPY /backend/package*.json .
-
-RUN npm install
-
-COPY /backend .
-
-RUN npm run build
-
-# # Build for React. Converts TSX and React into a static html bundle
-FROM --platform=arm64 node:18-alpine as frontendbuild
-# FROM --platform=amd64 node:18-alpine as frontendbuild
-
+# Build the frontend
+FROM --platform=amd64 node:18-alpine AS frontend-build
 WORKDIR /frontend
-
-COPY frontend/package*.json .
-
+# copy only package.json 
+COPY frontend/package*.json ./
+# install all deps
 RUN npm install --legacy-peer-deps
-
-COPY /frontend/ .
-
-# RUN npm run build
-
-
-# Production level Image: Inherits from built api and frontend images
-FROM --platform=amd64 node:18-alpine as production
-# FROM --platform=amd64 node:18-alpine as production
-
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-ARG SCHEMA=
-ENV SCHEMA=${SCHEMA}
-
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-
-ARG JWT_SECRET=strongpassword
-ENV JWT_SECRET=${JWT_SECRET}
-
-ARG JWT_EXPIRES_IN=604800
-ENV JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
-
-ARG VITE_GOOGLE_API_KEY
-ENV VITE_GOOGLE_API_KEY=${VITE_GOOGLE_API_KEY}
-
-ARG AWS_ACCESS_KEY_ID
-ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-
-ARG AWS_BUCKET_NAME
-ENV AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
-
-ARG AWS_SECRET_ACCESS_KEY
-ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-
-
-WORKDIR /var/www
-
-COPY /backend/package*.json .
-
-COPY /backend/.sequelizerc .
-
-
-COPY --from=frontendbuild frontend/dist ./dist/react-vite
-COPY --from=frontendbuild frontend/public ./dist/react-vite/public
-
-RUN npm install --only=production
-
-COPY --from=backendbuild backend/dist ./dist
-
-
+COPY frontend/ ./
+RUN npm run build
+# Stage 2: Production image (API + UI)
+FROM --platform=amd64 node:18-alpine AS production
+WORKDIR /app
+# copy backend package.json
+COPY backend/package*.json ./
+# install *only* production dependencies
+RUN npm install --omit=dev
+# copy backend
+COPY backend/ ./
+# 4) copy the compiled frontend
+COPY --from=frontend-build /frontend/dist ./dist/hpcuora
+COPY --from=frontend-build /frontend/public ./dist/hpcuora/public
+# env-vars
+ENV NODE_ENV=production
 EXPOSE 8000
-CMD [ "npm", "start"]
+# directly launch your entrypoint
+CMD ["node", "bin/www"]
+
