@@ -151,7 +151,7 @@ function questionReducer(state = initialState, action) {
 
     switch (action.type) {
 
-        case GET_ALL_QUESTIONS:
+        case GET_ALL_QUESTIONS: {
             const questionArr = action.payload.Questions;
             newState = { ...state };
             newState.allQuestions = questionArr;
@@ -165,9 +165,10 @@ function questionReducer(state = initialState, action) {
 
             return newState;
 
+        }
 
 
-        case GET_A_QUESTION:
+        case GET_A_QUESTION: {
 
             const singleQuestion = action.payload;
             newState = { ...state };
@@ -179,30 +180,32 @@ function questionReducer(state = initialState, action) {
             }
             newState.byId = newByIdSingleQuestion;
             return newState;
+        }
 
-
-        case CREATE_A_QUESTION:
+        case CREATE_A_QUESTION: {
             const newQuestion = action.payload;
             newState = { ...state };
             newState.allQuestions = [...state.allQuestions, newQuestion]
             newState.byId = { ...newState.byId, [newQuestion.id]: newQuestion };
+            return newQuestion;
+        }
 
-
-        case UPDATE_A_QUESTION:
+        case UPDATE_A_QUESTION: {
             newState = { ...state };
             newState.allQuestions = [...newState.allQuestions, action.payload];
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
             return newState;
-
+    q   }
             
-        case DELETE_A_QUESTION:
+        case DELETE_A_QUESTION: {
             newState = { ...state };
             newState.allQuestions = state.allQuestions.filter((question) => question.id !== action.payload);
             newState.byId = { ...state.byId };
             delete newState.byId[action.payload];
             return newState;
-
+        }
+        
         default:
             return state;
     }
