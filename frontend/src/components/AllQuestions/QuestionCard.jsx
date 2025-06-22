@@ -1,15 +1,13 @@
 import { NavLink } from 'react-router-dom';
 // import './QuestionCard.css';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteAQuestionThunk } from '../../store/question';
+import {  useState } from 'react';
+import { useDispatch } from 'react-redux';
 import DeleteQuestionModal from '../DeleteQuestionModal';
 import CommentCard from '../CommentCard/CommentCard';
-import CommentFormModal from './CommentFormModal';
 
 
 
-const QuestionCard = ({ id, userId, questionBody, questionImage, author, loggedIn, comments }) => {
+const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comments }) => {
 
     const [questionId, setQuestionId] = useState(null);
     const dispatch = useDispatch();

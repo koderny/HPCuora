@@ -137,7 +137,7 @@ function commentReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
 
-        case GET_ALL_COMMENTS:
+        case GET_ALL_COMMENTS: {
             const comments = action.payload.Comments
             newState = { ...state };
             newState.allComments = comments
@@ -148,30 +148,31 @@ function commentReducer(state = initialState, action) {
             }
             newState.byId = newByIdGetAllComments;
             return newState;
+        }
 
-
-        case CREATE_A_COMMENT:
+        case CREATE_A_COMMENT: {
             newState = { ...state }
             newState.allComments = [...newState.allComments, action.payload]
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload }
             return newState;
+        }
 
-
-        case UPDATE_A_COMMENT:
+        case UPDATE_A_COMMENT: {
             newState = { ...state };
             newState.allComments = [...newState.allComments, action.payload];
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
             return newState;
+         }
 
-
-        case DELETE_A_COMMENT:
+        case DELETE_A_COMMENT: {
             newState = { ...state };
             newState.allComments = state.allComments.filter(comment => comment.id !== action.payload);
             newState.byId = { ...state.byId };
             delete newState.byId[action.payload];
             return newState;
-
+        }
+        
         default:
             return state;
     }

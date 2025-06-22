@@ -196,7 +196,7 @@ function questionReducer(state = initialState, action) {
             newState.byId = { ...newState.byId, [action.payload.id]: action.payload };
 
             return newState;
-    q   }
+       }
             
         case DELETE_A_QUESTION: {
             newState = { ...state };
@@ -205,7 +205,7 @@ function questionReducer(state = initialState, action) {
             delete newState.byId[action.payload];
             return newState;
         }
-        
+
         default:
             return state;
     }
