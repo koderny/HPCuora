@@ -302,7 +302,7 @@ router.delete('/:questionId', requireAuth, async (req, res, next) => {
 });
 
 
-//LEAVE A COMMENT BASED ON A QUESTION ID
+//CREATE A COMMENT BASED ON A QUESTION ID
 router.post('/:questionId/comment', requireAuth, async (req, res, next) => {
   try {
 

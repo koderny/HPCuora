@@ -98,7 +98,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
   }
 });
 
-
+// Route to Delete a Comment
 router.delete('/:commentId', requireAuth, async (req, res, next) => {
   try {
     const {commentId} = req.params;
