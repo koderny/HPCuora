@@ -36,7 +36,7 @@ ENV NODE_ENV=${NODE_ENV}
 ARG SCHEMA=harold_schema
 ENV SCHEMA=${SCHEMA}
 
-ARG DATABASE_URL=postgresql://anthony_database_vp6k_user:JWTKUXbikxR0iaRoLJNfDnnnGUda49Rl@dpg-d0v7ng63jp1c73dsaigg-a.ohio-postgres.render.com/anthony_database_vp6k
+ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 
 ARG JWT_SECRET=strongpassword
