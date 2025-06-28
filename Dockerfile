@@ -9,7 +9,6 @@ RUN npm install
 
 COPY /backend .
 
-RUN npm run build
 
 # # Build for React. Converts TSX and React into a static html bundle
 FROM --platform=arm64 node:18-alpine as frontendbuild
@@ -19,7 +18,7 @@ WORKDIR /frontend
 
 COPY frontend/package*.json .
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 COPY /frontend/ .
 
@@ -27,17 +26,17 @@ RUN npm run build
 
 
 # Production level Image: Inherits from built api and frontend images
-FROM --platform=amd64 node:18-alpine as production
+FROM --platform=amd64 node as production
 # FROM --platform=amd64 node:18-alpine as production
 
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-ARG SCHEMA=
+ARG SCHEMA=harold_schema
 ENV SCHEMA=${SCHEMA}
 
-ARG DATABASE_URL
+ARG DATABASE_URL=postgresql://anthony_database_vp6k_user:JWTKUXbikxR0iaRoLJNfDnnnGUda49Rl@dpg-d0v7ng63jp1c73dsaigg-a.ohio-postgres.render.com/anthony_database_vp6k
 ENV DATABASE_URL=${DATABASE_URL}
 
 ARG JWT_SECRET=strongpassword
@@ -61,18 +60,17 @@ ENV AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
 WORKDIR /var/www
 
-COPY /backend/package*.json .
+# COPY /backend/package*.json .
 
-COPY /backend/.sequelizerc .
+# COPY /backend/.sequelizerc .
 
 
-COPY --from=frontendbuild frontend/dist ./dist/react-vite
-COPY --from=frontendbuild frontend/public ./dist/react-vite/public
 
-RUN npm install --only=production
+COPY --from=frontendbuild frontend/dist ./frontend/dist
 
-COPY --from=backendbuild backend/dist ./dist
-
+COPY --from=backendbuild backend/ ./backend
 
 EXPOSE 8000
-CMD [ "npm", "start"]
+WORKDIR /var/www/backend
+
+CMD ["npm", "run", "deploy"]

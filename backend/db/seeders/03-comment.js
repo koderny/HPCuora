@@ -7,8 +7,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await Comment.bulkCreate([
+  up: async (queryInterface, Sequelize) => {
+    options.tableName = 'Comments';
+    return queryInterface.bulkInsert(options, [
       {
         userId: 1,
         questionId: 1,

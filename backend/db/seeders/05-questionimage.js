@@ -8,8 +8,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await QuestionImage.bulkCreate([
+  up: async (queryInterface, Sequelize) => {
+    options.tableName = 'QuestionImages';
+    return queryInterface.bulkInsert(options, [
       {
         questionId: 1,
         url: "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*sfOToFJa35tWms48BWzpfg.jpeg",

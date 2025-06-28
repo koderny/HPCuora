@@ -7,8 +7,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await SavedQuestion.bulkCreate([
+  up: async (queryInterface, Sequelize) => {
+    options.tableName = 'SavedQuestions';
+    return queryInterface.bulkInsert(options, [
       {
         userId: 1,
         questionId: 1,
@@ -16,24 +17,24 @@ module.exports = {
       {
         userId: 2,
         questionId: 2,
-        
+
       }, {
         userId: 3,
         questionId: 3,
-       
+
       }, {
         userId: 1,
         questionId: 4,
-        
+
       }, {
         userId: 2,
         questionId: 5,
-       
+
       }, {
         userId: 3,
         questionId: 5,
       },
-    
+
     ], { validate: true });
   },
 

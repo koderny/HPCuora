@@ -9,6 +9,7 @@
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
+    "deploy": "npm run build && bash ./bin/deploy.sh",
     "build": "node psql-setup-script.js",
     "postgres": "npx dotenv sequelize create",
     "db:create": "dotenv sequelize-cli db:create",

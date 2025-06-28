@@ -7,8 +7,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await Question.bulkCreate([
+  up: async (queryInterface, Sequelize) => {
+    options.tableName = 'Questions';
+    return queryInterface.bulkInsert(options, [
       {
         userId: 1,
         questionBody: 'Who directed Avatar?'
