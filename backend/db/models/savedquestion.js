@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
       SavedQuestion.belongsTo(models.Question, {
         foreignKey: 'questionId',
-        as: 'savedQuestion'
+        as: 'favQuestion'
       })
     }
   }

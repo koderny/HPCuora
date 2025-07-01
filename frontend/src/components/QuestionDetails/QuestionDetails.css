@@ -1,9 +1,13 @@
 #question-details img {
-    width: 300px;
+    width: 400px;
+    height: 400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #question-detail-box {
-     width: 600px;
+     width: 500px;
   margin: 0 auto;
   background-color: #fff; 
   border: 1px solid #ddd; 

@@ -1,17 +1,42 @@
-#product-card {
+.question-post {
     display: flex;
     flex-direction: column;
-    height: 22rem;
-    width: 20rem;
+    /* height: 22rem; */
+    width: 30rem;
     cursor: pointer;
     text-decoration: none;
-    color: black;
+    color: white;
+    background-color: rgb(32, 32, 32);
+    border-radius: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.question-user-fav {
+    display: flex;
+    justify-content: space-between;
+
 }
 
+.question-user-fav button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
 
-#question-card-image {  
-    height: 15rem;
-    object-fit: cover;
-    transition: filter .1s ease-in;
-    z-index: 0;
+.unfavorited {
+    stroke-width: 3;
+    stroke: #fff;
+}
+
+.unfavorited:hover {
+    stroke: red;
+}
+
+.favorited {
+    fill: red;
+}
+
+.question-card-image { 
+    background-color: darkslategrey; 
+    margin-bottom: 20px;
 }

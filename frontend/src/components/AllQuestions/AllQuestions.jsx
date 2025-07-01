@@ -31,7 +31,7 @@ const AllQuestions = () => {
             <div id='all-questions'>
                 {questions && questions.length ? questions.slice().reverse().map((question, i) => {
                     return (
-                        <div key={`${i}-${question.id}`}>
+                        <div id='single-card' key={`${i}-${question.id}`}>
                             <QuestionCard {...question} loggedIn={sessionUser?.id} />
                         </div>
                     )

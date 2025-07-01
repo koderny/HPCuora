@@ -187,7 +187,7 @@ function questionReducer(state = initialState, action) {
             newState = { ...state };
             newState.allQuestions = [...state.allQuestions, newQuestion]
             newState.byId = { ...newState.byId, [newQuestion.id]: newQuestion };
-            return newQuestion;
+            return newState;
         }
 
         case UPDATE_A_QUESTION: {

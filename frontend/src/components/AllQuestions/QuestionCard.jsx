@@ -1,9 +1,15 @@
 import { NavLink } from 'react-router-dom';
 // import './QuestionCard.css';
-import {  useState } from 'react';
+import { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import DeleteQuestionModal from '../DeleteQuestionModal';
 import CommentCard from '../CommentCard/CommentCard';
+import './QuestionCard.css'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+// import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
+import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 
 
 
@@ -12,41 +18,57 @@ const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comme
     const [questionId, setQuestionId] = useState(null);
     // const dispatch = useDispatch();
     const handleDelete = async () => {
-    setQuestionId(id)
+        setQuestionId(id)
         // try {
         //     await dispatch(deleteAQuestionThunk(id))
         // } catch (error) {
         //     console.error(error)
         // }
     }
+    const addToFavoritesHeart = () => {
+
+    }
 
     return (
         <div className="question-post">
-
             <div>
-                <p className='question-card-text'>{author?.firstName} {author?.lastName}</p>
+                <div className="question-user-fav" >
+                    <p className='question-card-text'>{author?.firstName} {author?.lastName}</p>
+                    <button
+                        className='heart'
+                        onClick={addToFavoritesHeart}
+                    >
+                        <CiHeart className='unfavorited' />
+                        {/* <FaHeart className='favorited'/> */}
+                    </button>
+                </div>
                 <NavLink to={`/questions/${id}`} id='question-card-body'>
 
                     <div id='question-card-name-comment'>
                         <p className="question-card-body-text">{questionBody}</p>
-                       <p className="question-card-image">{questionImage?.map((image, id) => (
-                            <img src={image?.url} key={id}/>
-                        ))} </p>
+
+                        {questionImage.length > 0 && questionImage?.map((image, id) => (
+                            // If image exist execute -->
+                            <div className="question-card-image">
+                                {image.url && <img src={image?.url} key={id} />}
+                            </div>
+
+                        ))}
 
                     </div>
                 </NavLink>
                 {loggedIn == author?.id ? (
                     <div>
-                    <NavLink to={`/questions/${id}/edit`}>Edit</NavLink>
-                    <button onClick={handleDelete}>Delete</button> 
+                        <NavLink to={`/questions/${id}/edit`}>Edit</NavLink>
+                        <button onClick={handleDelete}>Delete</button>
                     </div>
-                )  : ""}
+                ) : ""}
                 {questionId !== null && (
-                    <DeleteQuestionModal questionId = {questionId} setQuestionId={setQuestionId}/>
+                    <DeleteQuestionModal questionId={questionId} setQuestionId={setQuestionId} />
                 )}
                 {/* <CommentFormModal/> */}
                 {comments.map((comment, id) => (
-                    <CommentCard {...comment} key={id}/>
+                    <CommentCard {...comment} key={id} />
                 ))}
             </div>
         </div>

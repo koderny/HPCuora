@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import questionReducer from './question';
 import commentReducer from './comment';
+import favoritesReducer from './savedQuestion';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   questions: questionReducer,
-  comments: commentReducer
+  comments: commentReducer,
+  favorites: favoritesReducer
 });
 
 let enhancer;

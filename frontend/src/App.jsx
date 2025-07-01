@@ -8,6 +8,7 @@ import * as sessionActions from './store/session';
 import HomePage from './components/HomePage/HomePage';
 import QuestionDetails from './components/QuestionDetails/QuestionDetails';
 import UpdateAQuestion from './components/UpdateAQuestion/UpdateAQuestion';
+import FavoritesPage from './components/FavoritesPage/FavoritePage';
 
 
 function Layout() {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/questions/:id/edit",
         element: <UpdateAQuestion />
+      },
+      {
+        path: "/favoriteQuestions",
+        element: <FavoritesPage />
       }
     ]
   }
