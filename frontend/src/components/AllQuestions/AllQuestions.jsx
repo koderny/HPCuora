@@ -3,6 +3,8 @@ import './AllQuestions.css';
 import QuestionCard from './QuestionCard';
 import { useEffect, useState } from 'react';
 import { getAllQuestionsThunk } from '../../store/question';
+import { getAllFavoritesThunk } from '../../store/savedQuestion';
+import { getAllCategoriesThunk } from '../../store/category';
 
 
 
@@ -11,7 +13,8 @@ const AllQuestions = () => {
     const sessionUser = useSelector(state => state.session.user);
     console.log(sessionUser)
     const questions = useSelector((state) => state.questions.allQuestions);
-    console.log(questions, "questions")
+    const categories = useSelector((state) => state.categories.allCategories);
+    console.log(categories, 'categories')
 
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -19,6 +22,8 @@ const AllQuestions = () => {
     useEffect(() => {
         const getAllQuestions = async () => {
             await dispatch(getAllQuestionsThunk());
+            await dispatch(getAllFavoritesThunk());
+            await dispatch(getAllCategoriesThunk());
             setIsLoaded(true);
         }
         if (!isLoaded) {
@@ -29,6 +34,20 @@ const AllQuestions = () => {
     if (isLoaded) {
         return (
             <div id='all-questions'>
+                <div className='outside-bar'>
+                    <ul className="category-name">
+                    {categories && categories.length > 0 ? categories.map((category, i) => {
+                        return (
+                                <li key={i}>
+                                    {category.category}
+                                </li>
+                        )
+                    }) : ""
+                    }
+                            </ul>
+
+                </div>
+
                 {questions && questions.length ? questions.slice().reverse().map((question, i) => {
                     return (
                         <div id='single-card' key={`${i}-${question.id}`}>

@@ -1,7 +1,5 @@
 'use strict';
 
-const category = require("../models/category");
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -9,35 +7,25 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Questions', {
+    await queryInterface.createTable('Categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Users",
-          key: "id"
-        },
-        onDelete: "CASCADE"
-      },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Categories",
-          key: "id"
-        },
-        onDelete: "CASCADE"
+      category: {
+        // type: Sequelize.ENUM('books', 'movies', 'music', 'science', 'technology'),
+        // values: ['books', 'movies', 'music', 'science', 'technology'],
 
-      },
-      questionBody: {
-        type: Sequelize.STRING(2000),
+        type: Sequelize.STRING, 
         allowNull: false,
+        validate: {
+          isIn: {
+            args: [['books', 'movies', 'music', 'science', 'technology']], 
+            msg: 'Only books, movies, science and technology accepted'
+          }
+        }
 
       },
       createdAt: {
@@ -54,7 +42,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Questions";
+    options.tableName = "Categories";
     return queryInterface.dropTable(options);
   }
 };

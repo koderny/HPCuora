@@ -9,6 +9,7 @@ const { check } = require('express-validator');
 // --Sequelize Imports--
 const { User, Comment, Question, QuestionImage, SavedQuestion } = require('../../db/models');
 
+//GET ALL FAVORITES/SAVED QUESTIONS
 router.get('/', requireAuth, async (req, res, next) => {
     try {
         const userId = req.user.id;
@@ -21,52 +22,75 @@ router.get('/', requireAuth, async (req, res, next) => {
                     as: 'favQuestion',
                     include: [
                         {
-                            model: QuestionImage,
-                            as: 'questionImage',
-                        },
-                        {
                             model: User,
                             as: "author",
                         },
-                        {
-                            model: Comment,
-                            as: "comments"
-                        }
 
                     ]
                 },
             ]
         });
 
-        const prettyQuestions = [];
+        return res.json({ Questions: savedQuestions });
+    } catch (e) {
+        next(e);
+    }
+});
 
-        for (let question of savedQuestions) {
-            const questionObj = await question.toJSON();
-            console.log(questionObj)
+// Route to add a question to favorites
+router.post('/:questionId', requireAuth, async (req, res, next) => {
+    try {
+        const questionId = req.params.questionId;
+        const userId = req.user.id
+        console.log(userId)
+        const existingQuestion = await Question.findByPk(questionId);
 
-            // Get the questionImage
-            let previewImageUrl = null;
-            if (questionObj.QuestionImages && questionObj.QuestionImages.length > 0) {
-                for (let previewImage of questionObj.QuestionImages) {
-                    if (previewImage.preview === true) {
-                        previewImageUrl = previewImage.url;
-                        break;
-                    }
-                }
-
-                if (!previewImageUrl) {
-                    previewImageUrl = questionObj.QuestionImages[0].url;
-                }
-            }
-
-
-            questionObj.previewImage = previewImageUrl;
-            delete questionObj.QuestionImages;
-            prettyQuestions.push(questionObj)
-
+        if (!existingQuestion) {
+            const invalidQuestionId = new Error("Question couldn't be found");
+            invalidQuestionId.status = 404;
+            throw invalidQuestionId;
         }
 
-        return res.json({ Questions: prettyQuestions });
+        const [savedQuestion] = await SavedQuestion.findOrCreate({
+            where: {
+                userId: userId,
+                questionId: parseInt(questionId),
+            }
+        });
+
+        return res.status(201).json(savedQuestion);
+    } catch (error) {
+        next(error);
+    }
+});
+
+//Delete favorite
+
+router.delete('/:questionId', requireAuth, async (req, res, next) => {
+    try {
+        const { questionId } = req.params;
+        const userId = req.user.id;
+        const savedQuestion = await SavedQuestion.findOne({
+            where: {
+                userId: userId,
+                questionId: parseInt(questionId),
+            }
+        });
+
+        if (!savedQuestion) {
+            const err = new Error("Question couldn't be found");
+            err.status = 404;
+            throw err;
+        }
+
+        if (savedQuestion.userId !== userId) {
+            const err = new Error('Forbidden');
+            err.status = 403;
+            throw err;
+        }
+
+        await savedQuestion.destroy();
+        return res.json({ message: "Successfully deleted" });
     } catch (e) {
         next(e);
     }

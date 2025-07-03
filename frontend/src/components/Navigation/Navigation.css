@@ -1,4 +1,17 @@
+.navigation-list {
+  display: flex;
+}
+
 .logo-container {
     width: 100px;
     height: 100px;
+    /* background: transparent; */
+}
+
+.profile-dropdown {
+  position: absolute;
+  margin-right: 2rem;
+  height: 2rem;
+  width: 9rem;
+  z-index: 1;
 }

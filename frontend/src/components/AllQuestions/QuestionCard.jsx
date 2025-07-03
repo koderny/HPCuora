@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 // import './QuestionCard.css';
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DeleteQuestionModal from '../DeleteQuestionModal';
 import CommentCard from '../CommentCard/CommentCard';
 import './QuestionCard.css'
@@ -10,13 +10,16 @@ import './QuestionCard.css'
 // import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
+import { addFavoritesThunk, deleteFavoriteThunk } from '../../store/savedQuestion';
 
 
 
 const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comments }) => {
 
     const [questionId, setQuestionId] = useState(null);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const favoriteById = useSelector(state => state.favorites.byId[id]);
+    // console.log(id, favoriteById, "favoritebyid")
     const handleDelete = async () => {
         setQuestionId(id)
         // try {
@@ -25,9 +28,14 @@ const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comme
         //     console.error(error)
         // }
     }
-    const addToFavoritesHeart = () => {
-
+    const addToFavoritesHeart = async () => {
+        if (favoriteById) {
+            await dispatch(deleteFavoriteThunk(id));
+        } else {
+            await dispatch(addFavoritesThunk(id))
+        }
     }
+
 
     return (
         <div className="question-post">
@@ -38,8 +46,7 @@ const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comme
                         className='heart'
                         onClick={addToFavoritesHeart}
                     >
-                        <CiHeart className='unfavorited' />
-                        {/* <FaHeart className='favorited'/> */}
+                        {favoriteById ? <FaHeart className='favorited' /> :  <CiHeart className='unfavorited' /> }
                     </button>
                 </div>
                 <NavLink to={`/questions/${id}`} id='question-card-body'>

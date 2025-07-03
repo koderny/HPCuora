@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteFavoriteThunk, getAllFavoritesThunk } from '../../store/savedQuestion';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './FavoritesPage.css';
 
 
@@ -39,10 +39,10 @@ const FavoritesPage = () => {
                 {favorites.map((fav) => (
                     <li key={fav.id} className="favorite-item">
                         <div className="favorite-product-info" 
-                        // onClick={() => handleClickQuestion(fav.questionId)}
+                        
                         >
-                            <p> User: {fav.favQuestion?.author?.firstName} {fav.favQuestion?.author?.lastName}</p>
-                            <p> Question: {fav.favQuestion?.questionBody}</p>
+                            <p>  {fav.favQuestion?.author?.firstName} {fav.favQuestion?.author?.lastName}</p>
+                            <Link to={`/questions/${fav.favQuestion.id}`}>  {fav.favQuestion?.questionBody}</Link>
                             <button onClick={(e) => deleteFavorite(e, fav.favQuestion.id)}>
                                 Delete Favorite
                             </button>

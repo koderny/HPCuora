@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'author'
       });
 
+       Question.belongsTo(models.Category, {
+        foreignKey: 'categoryId',
+        as: 'category',
+        hooks: true
+      });
+
       Question.hasMany(models.Comment, {
         foreignKey: 'questionId',
         as: 'comments',
@@ -27,10 +33,15 @@ module.exports = (sequelize, DataTypes) => {
         as: 'questionImage',
         hooks: true
       });
+     
     }
   }
   Question.init({
     userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

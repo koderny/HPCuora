@@ -4,13 +4,15 @@ import sessionReducer from './session';
 import questionReducer from './question';
 import commentReducer from './comment';
 import favoritesReducer from './savedQuestion';
+import categoryReducer from './category';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   questions: questionReducer,
   comments: commentReducer,
-  favorites: favoritesReducer
+  favorites: favoritesReducer,
+  categories: categoryReducer
 });
 
 let enhancer;

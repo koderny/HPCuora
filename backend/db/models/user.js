@@ -74,22 +74,11 @@ module.exports = (sequelize) => {
           len: [60, 60],
         },
       },
-      // profilePicture: {
-      //   type: DataTypes.STRING.BINARY,
-      //   allowNull: false,
-      //   validate: {
-      //           notEmpty: true,
-      //           len: [8, 500],
-      //           isGoodUrl(val) {
-      //               if (val.startsWith(" ")) {
-      //                   throw new Error("Can't start with empty space")
-      //               } else if (val.endsWith(" ")) {
-      //                   throw new Error("Dont end with spaces please");
-      //               }
-      //           }
-      //       }
-      // }
-    },
+    //   profilePicture: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    // }
+  },
     {
       sequelize,
       modelName: 'User',

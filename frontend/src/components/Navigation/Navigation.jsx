@@ -15,7 +15,7 @@ const navigate = useNavigate();
   }
 
   return (
-    <ul>
+    <ul className='navigation-list'>
       <li>
         <NavLink to="/"> <img src= {logo} className="logo-container" onClick={goToHome} /></NavLink>
       </li>

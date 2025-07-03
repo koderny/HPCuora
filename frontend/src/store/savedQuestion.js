@@ -11,36 +11,36 @@ const DELETE_FAVORITE = "favorites/deleteFavorite";
 
 
 // ACTION CREATORS
- 
+
 const getAllFavorites = (favorites) => ({
-    type: GET_ALL_FAVORITES,
-    payload: favorites,
+  type: GET_ALL_FAVORITES,
+  payload: favorites,
 });
 
 const addFavorite = (favorites) => ({
-    type: ADD_FAVORITE,
-    payload: favorites,
+  type: ADD_FAVORITE,
+  payload: favorites,
 });
 
 const deleteFavorite = (favorite) => ({
-    type: DELETE_FAVORITE,
-    payload: favorite,
+  type: DELETE_FAVORITE,
+  payload: favorite,
 });
 
 
 
- // THUNKS 
+// THUNKS 
 
 export const getAllFavoritesThunk = () => async (dispatch) => {
-    try {
-        const res = await csrfFetch('/api/favorites');
-        if (res.ok) {
-            const data = await res.json();
-            if (data.errors) {
-                throw res;
-            }
-            dispatch(getAllFavorites(data))
-            return data;
+  try {
+    const res = await csrfFetch('/api/favorites');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.errors) {
+        throw res;
+      }
+      dispatch(getAllFavorites(data))
+      return data;
     }
   } catch (error) {
     return error;
@@ -49,15 +49,16 @@ export const getAllFavoritesThunk = () => async (dispatch) => {
 
 export const addFavoritesThunk = (questionId) => async (dispatch) => {
   try {
-    const res = await csrfFetch("/api/favorites", {
+    const res = await csrfFetch(`/api/favorites/${questionId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ questionid: questionId })
+
     });
 
     if (res.ok) {
       const data = await res.json();
       dispatch(addFavorite(data));
+      return data;
     }
   } catch (error) {
     return error;
@@ -71,7 +72,11 @@ export const deleteFavoriteThunk = (questionId) => async (dispatch) => {
     });
 
     if (res.ok) {
-      dispatch(deleteFavorite(productId));
+      const data = await res.json();
+      // dispatch(deleteFavorite(questionId));
+      dispatch(getAllFavoritesThunk());
+
+      return data;
     }
   } catch (error) {
     return error;
@@ -83,14 +88,14 @@ export const deleteFavoriteThunk = (questionId) => async (dispatch) => {
 // INITIAL STATE
 
 const initialState = {
-    byId: {},
-    allFavorites: []
+  byId: {},
+  allFavorites: []
 };
 
- // REDUCER 
- 
+// REDUCER 
+
 function favoritesReducer(state = initialState, action) {
-    let newState;
+  let newState;
 
   switch (action.type) {
     case GET_ALL_FAVORITES:
@@ -110,21 +115,22 @@ function favoritesReducer(state = initialState, action) {
     case ADD_FAVORITE:
       newState = { ...state }
       newState.allFavorites = [...newState.allFavorites, action.payload]
-      newState.byId = { ...newState.byId, [action.payload.id]: action.payload }
+      newState.byId = { ...newState.byId, [action.payload.questionId]: action.payload }
       return newState;
 
     case DELETE_FAVORITE:
       newState = { ...state };
-      newState.allFavorites = state.allFavorites.filter((favorite) => favorite.product_id !== action.payload);
+      newState.allFavorites = state.allFavorites.filter((favorite) => favorite.questionId !== action.payload);
       newState.byId = { ...state.byId }
       delete newState.byId[action.payload];
+      console.log(newState, "delete state")
       return newState;
 
     default:
       return state;
 
 
-        }
+  }
 }
 
 export default favoritesReducer;
