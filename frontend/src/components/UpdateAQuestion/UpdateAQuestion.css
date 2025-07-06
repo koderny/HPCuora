@@ -1,0 +1,8 @@
+.update-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+}

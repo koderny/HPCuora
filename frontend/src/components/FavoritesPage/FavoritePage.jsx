@@ -42,8 +42,8 @@ const FavoritesPage = () => {
                         
                         >
                             <p>  {fav.favQuestion?.author?.firstName} {fav.favQuestion?.author?.lastName}</p>
-                            <Link to={`/questions/${fav.favQuestion.id}`}>  {fav.favQuestion?.questionBody}</Link>
-                            <button onClick={(e) => deleteFavorite(e, fav.favQuestion.id)}>
+                            <Link to={`/questions/${fav?.favQuestion?.id}`}>  {fav.favQuestion?.questionBody}</Link>
+                            <button onClick={(e) => deleteFavorite(e, fav?.favQuestion?.id)}>
                                 Delete Favorite
                             </button>
                         </div>

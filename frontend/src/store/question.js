@@ -85,6 +85,7 @@ export const createAQuestionThunk = (question) => async (dispatch) => {
         if (res.ok) {
             const data = await res.json();
             dispatch(createAQuestion(data));
+            console.log(data)
             // getAllQuestionsThunk();
             return data;
         }

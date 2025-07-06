@@ -15,3 +15,7 @@
   width: 9rem;
   z-index: 1;
 }
+
+.navigation-list li {
+  color: #fff;
+}

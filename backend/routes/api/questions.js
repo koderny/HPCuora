@@ -9,7 +9,7 @@ const { check } = require('express-validator');
 
 
 // --Sequelize Imports--
-const { User, Comment, Question, QuestionImage } = require('../../db/models');
+const { User, Comment, Question, QuestionImage, Category } = require('../../db/models');
 
 const validateQuestion = [
   check('body')
@@ -21,7 +21,10 @@ const validateQuestion = [
 router.get('/', async (req, res, next) => {
   try {
     const questions = await Question.findAll({
-      attributes: ["id", "userId", "questionBody"],
+      attributes: ["id", "userId", "questionBody", "categoryId"],
+       order: [
+            ['createdAt', 'DESC'],
+        ],
       include: [
         {
           model: QuestionImage,
@@ -34,7 +37,8 @@ router.get('/', async (req, res, next) => {
         {
           model: Comment,
           as: "comments"
-        }
+        },
+        
       ]
     });
 
@@ -76,10 +80,10 @@ router.get('/', async (req, res, next) => {
 //CREATE A QUESTION
 router.post('/', requireAuth, validateQuestion, async (req, res, next) => {
   try {
-    const { questionBody, previewImgUrl } = req.body
+    const { questionBody, previewImgUrl, categoryId } = req.body
 
     const newQuestion = await Question.create({
-      userId: req.user.id, questionBody
+      userId: req.user.id, questionBody, categoryId
     });
 
     await QuestionImage.bulkCreate([
@@ -130,6 +134,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         userId: parseInt(userId)
       },
       attributes: ['id', 'userId', 'title', 'questionBody'],
+  
       include: [
         {
           model: User,

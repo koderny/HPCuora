@@ -10,12 +10,14 @@ import { getAllCategoriesThunk } from '../../store/category';
 
 const AllQuestions = () => {
     const dispatch = useDispatch();
+
     const sessionUser = useSelector(state => state.session.user);
     console.log(sessionUser)
     const questions = useSelector((state) => state.questions.allQuestions);
     const categories = useSelector((state) => state.categories.allCategories);
     console.log(categories, 'categories')
 
+    const [categoryId, setCategoryId] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
 
@@ -31,30 +33,47 @@ const AllQuestions = () => {
         }
     }, [dispatch, isLoaded, questions])
 
+    const filteredQuestions = categoryId ? questions.filter(question => question.categoryId == categoryId) : questions;
+
+    console.log(filteredQuestions, "filtered questions")
+
     if (isLoaded) {
         return (
             <div id='all-questions'>
                 <div className='outside-bar'>
                     <ul className="category-name">
-                    {categories && categories.length > 0 ? categories.map((category, i) => {
-                        return (
+                        <li>
+                            <button onClick={() => setCategoryId(null)}>
+                                All
+                            </button>
+                        </li>
+                        {categories && categories.length > 0 ? categories.map((category, i) => {
+                            return (
                                 <li key={i}>
-                                    {category.category}
+                                    <img src={`assets/${category.category}.jpeg`} />
+                                    <button onClick={() => setCategoryId(category.id)}>
+                                        {category.category}
+                                    </button>
                                 </li>
-                        )
-                    }) : ""
-                    }
-                            </ul>
+                            )
+                        }) : ""
+                        }
+                    </ul>
 
                 </div>
 
-                {questions && questions.length ? questions.slice().reverse().map((question, i) => {
-                    return (
-                        <div id='single-card' key={`${i}-${question.id}`}>
-                            <QuestionCard {...question} loggedIn={sessionUser?.id} />
-                        </div>
-                    )
-                }) : ''}
+                <div className='questions'>
+
+
+                    {filteredQuestions && filteredQuestions.length ? filteredQuestions.slice().reverse().map((question, i) => {
+                        return (
+                            <div id='single-card' key={`${i}-${question.id}`}>
+                                <QuestionCard {...question} loggedIn={sessionUser?.id} />
+                            </div>
+                        )
+                    }) : ''}
+
+                </div>
             </div>
         )
     }

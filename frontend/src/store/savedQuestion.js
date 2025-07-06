@@ -106,7 +106,7 @@ function favoritesReducer(state = initialState, action) {
 
       let newByIdGetAllFavorites = {};
       for (let favorite of favorites) {
-        newByIdGetAllFavorites[favorite.id] = favorite;
+        newByIdGetAllFavorites[favorite.favQuestion.id] = favorite;
       }
       newState.byId = newByIdGetAllFavorites;
       newState.allFavorites = favorites;
