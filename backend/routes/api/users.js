@@ -48,7 +48,7 @@ const validateSignup = [
 router.post('/', validateSignup, async (req, res, next) => {
   try {
 
-    const { email, password, username, firstName, lastName } = req.body;
+    const { email, password, username, firstName, lastName, profilePicUrl } = req.body;
 
     const existingEmail = await User.findOne({
       where: {
@@ -81,7 +81,7 @@ router.post('/', validateSignup, async (req, res, next) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword, firstName, lastName });
+    const user = await User.create({ email, username, hashedPassword, firstName, lastName, profilePicUrl });
 
     const safeUser = {
       id: user.id,
@@ -89,6 +89,7 @@ router.post('/', validateSignup, async (req, res, next) => {
       lastName: user.lastName,
       email: user.email,
       username: user.username,
+      profilePicUrl: user.profilePicUrl
 
     };
 

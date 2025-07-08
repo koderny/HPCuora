@@ -41,12 +41,17 @@ const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comme
         <div className="question-post">
             <div>
                 <div className="question-user-fav" >
-                    <p className='question-card-text'>{author?.firstName} {author?.lastName}</p>
+                    
+                    <div className="author-profile-pic">
+                        {author?.profilePicUrl ? <img src={author?.profilePicUrl} alt={author?.firstName} /> : <img src="profilePics/NPP.jpeg" alt="avatar" />}
+                        <p className='question-card-text'>{author?.firstName} {author?.lastName}</p>
+                    </div>
+
                     <button
                         className='heart'
                         onClick={addToFavoritesHeart}
                     >
-                        {favoriteById ? <FaHeart className='favorited' /> :  <CiHeart className='unfavorited' /> }
+                        {favoriteById ? <FaHeart className='favorited' /> : <CiHeart className='unfavorited' />}
                     </button>
                 </div>
                 <NavLink to={`/questions/${id}`} id='question-card-body'>

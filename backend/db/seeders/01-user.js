@@ -17,7 +17,8 @@ module.exports = {
         lastName: 'Pedraza',
         email: 'demo@user.io',
         username: 'Demo-lition',
-        hashedPassword: bcrypt.hashSync('password')
+        hashedPassword: bcrypt.hashSync('password'),
+        profilePicUrl: "https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z3V5fGVufDB8fDB8fHww"
 
       },
       {
@@ -25,28 +26,33 @@ module.exports = {
         lastName: 'Bronca',
         email: 'user1@user.io',
         username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password1')
+        hashedPassword: bcrypt.hashSync('password1'),
+        profilePicUrl: "https://i.ibb.co/nqQNhY0g/AB.jpg"
       },
       {
         firstName: 'Roger',
         lastName: 'Diaz',
         email: 'user2@user.io',
         username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password2')
+        hashedPassword: bcrypt.hashSync('password2'),
+        profilePicUrl: ""
       },
       {
         firstName: 'Jane',
         lastName: 'Doe',
         email: 'user3@user.io',
         username: 'FakeUser3',
-        hashedPassword: bcrypt.hashSync('password3')
+        hashedPassword: bcrypt.hashSync('password3'),
+        profilePicUrl: ""
+        
       },
       {
         firstName: 'Mike',
         lastName: 'Smith',
         email: 'user4@user.io',
         username: 'FakeUser4',
-        hashedPassword: bcrypt.hashSync('password4')
+        hashedPassword: bcrypt.hashSync('password4'),
+        profilePicUrl: ""
       },
       {
         firstName: 'Claudia',

@@ -9,4 +9,19 @@ a {
 
 body {
     background-color: rgb(32, 32, 32);
+    color: #fff;
 }
+
+ul {
+    list-style: none;
+}
+
+.button-danger {
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    background-color: rgb(98, 25, 25);
+    color: white;
+    cursor: pointer;
+}
+

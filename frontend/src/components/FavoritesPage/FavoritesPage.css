@@ -1,3 +1,27 @@
-.favorite-product-info {
+.favorite-question-info {
     color: #fff;
+}
+
+.favorite-item {
+    margin-bottom: 20px;
+}
+.favorite-question-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.favorite-question-info .author-profile-pic {
+    display: flex;
+    gap: 5px;
+    
+}
+
+.favorite-question-info .author-profile-pic img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+    object-fit: cover;
+    margin: 0;
 }

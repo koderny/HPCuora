@@ -14,7 +14,7 @@
 .question-user-fav {
     display: flex;
     justify-content: space-between;
-
+    align-items: start;
 }
 
 .question-user-fav button {
@@ -39,4 +39,18 @@
 .question-card-image { 
     background-color: darkslategrey; 
     margin-bottom: 20px;
+}
+
+#single-card .question-post .question-user-fav .author-profile-pic {
+    display: flex;
+    gap: 5px;
+    
+}
+
+#single-card .question-post .question-user-fav .author-profile-pic img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+    object-fit: cover;
 }

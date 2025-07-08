@@ -2,6 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
+const { Op } = require("sequelize"); 
 
 // --Utility Imports--
 const { requireAuth } = require('../../utils/auth');
@@ -22,9 +23,9 @@ router.get('/', async (req, res, next) => {
   try {
     const questions = await Question.findAll({
       attributes: ["id", "userId", "questionBody", "categoryId"],
-       order: [
-            ['createdAt', 'DESC'],
-        ],
+      order: [
+        ['createdAt', 'DESC'],
+      ],
       include: [
         {
           model: QuestionImage,
@@ -36,9 +37,15 @@ router.get('/', async (req, res, next) => {
         },
         {
           model: Comment,
-          as: "comments"
+          as: "comments",
+          include: [
+            {
+              model: User,
+              as: "commenter",
+            },
+          ]
         },
-        
+
       ]
     });
 
@@ -134,7 +141,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         userId: parseInt(userId)
       },
       attributes: ['id', 'userId', 'title', 'questionBody'],
-  
+
       include: [
         {
           model: User,
@@ -217,13 +224,13 @@ router.put('/:id', requireAuth, validateQuestion, async (req, res, next) => {
 
 
     await existingQuestion.save();
-  
-    await QuestionImage.destroy({ where: {questionId: id}});
-    if(imageUrls.length > 0) {
+
+    await QuestionImage.destroy({ where: { questionId: id } });
+    if (imageUrls.length > 0) {
       const createImages = imageUrls.map((url, idx) => ({
-       questionId: id,
-       url,
-       preview: idx === 0 //true
+        questionId: id,
+        url,
+        preview: idx === 0 //true
       }))
       await QuestionImage.bulkCreate(createImages)
 
@@ -367,6 +374,9 @@ router.get('/:id/comments', async (req, res, next) => {
     next(error);
   }
 });
+
+
+
 
 
 module.exports = router;

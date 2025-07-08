@@ -1,0 +1,18 @@
+.comment-card {
+    margin-bottom: 20px;
+}
+
+#single-card .comment-card .author-profile-pic {
+    display: flex;
+    gap: 5px;
+    
+}
+
+#single-card .comment-card .author-profile-pic img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+    object-fit: cover;
+    margin: 0;
+}

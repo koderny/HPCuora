@@ -2,16 +2,22 @@
     visibility: hidden;
 }
 
-/* #profile-button {
+.profile-button {
     display: flex;
     align-items: center;
     justify-content: center;
     border: 0;
     color: black;
-    height: 3rem;
-    width: 3rem;
-    border-radius: 10rem;
     transition: ease-in .2s;
-    background-color: white;
+    background-color: transparent;
     cursor: pointer;
-} */
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid black;
+    object-fit: cover;
+}
+

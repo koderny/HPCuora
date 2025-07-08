@@ -20,17 +20,17 @@ const FavoritesPage = () => {
         navigate(`/questions/${questionId}`);
     };
 
-    if(!sessionUser){
+    if (!sessionUser) {
         return <h2>Log in to add to your favorites!!</h2>;
-    }else if (!favorites || favorites.length === 0) {
+    } else if (!favorites || favorites.length === 0) {
         return <div>No favorites yet!</div>;
     }
 
     const deleteFavorite = async (e, questionId) => {
         e.preventDefault();
         e.stopPropagation();
-            await dispatch(deleteFavoriteThunk(questionId));
-        };
+        await dispatch(deleteFavoriteThunk(questionId));
+    };
 
     return (
         <div className="favorites-page-container">
@@ -38,12 +38,17 @@ const FavoritesPage = () => {
             <ul className="favorites-list">
                 {favorites.map((fav) => (
                     <li key={fav.id} className="favorite-item">
-                        <div className="favorite-product-info" 
-                        
+                        <div className="favorite-question-info"
+
                         >
-                            <p>  {fav.favQuestion?.author?.firstName} {fav.favQuestion?.author?.lastName}</p>
+                            <div className="author-profile-pic">
+                                {fav?.favQuestion?.author?.profilePicUrl ? <img src={fav?.favQuestion?.author?.profilePicUrl} alt={fav?.favQuestion?.author?.firstName} /> : <img src="profilePics/NPP.jpeg" alt="avatar" />}
+                                <p className='question-card-text'>  {fav.favQuestion?.author?.firstName} {fav.favQuestion?.author?.lastName}</p>
+                            </div>
+
                             <Link to={`/questions/${fav?.favQuestion?.id}`}>  {fav.favQuestion?.questionBody}</Link>
-                            <button onClick={(e) => deleteFavorite(e, fav?.favQuestion?.id)}>
+
+                            <button className="button-danger" onClick={(e) => deleteFavorite(e, fav?.favQuestion?.id)}>
                                 Delete Favorite
                             </button>
                         </div>

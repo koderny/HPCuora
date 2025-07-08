@@ -4,6 +4,7 @@ import { NavLink} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import { FaHeart } from "react-icons/fa";
 // import logo from '/public/logo.png'
 
 function Navigation({ isLoaded }) {
@@ -12,12 +13,12 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className='navigation-list'>
-      {isLoaded && (
+      {sessionUser && <li><NavLink to="/favoriteQuestions"><FaHeart className="favorited-questions"/></NavLink></li>}
+       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />
         </li>
       )}
-      {sessionUser && <li><NavLink to="/favoriteQuestions">Favorites</NavLink></li>}
     </ul>
   );
 }

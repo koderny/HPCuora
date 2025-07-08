@@ -38,11 +38,10 @@ module.exports = {
         type: Sequelize.STRING.BINARY,
         allowNull: false
       },
-      // profilePicture: {
-      //   type: Sequelize.STRING(500),
-      //   allowNull: false,
-      //   default: true
-      // },
+      profilePicUrl: {
+        type: Sequelize.STRING(500),
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

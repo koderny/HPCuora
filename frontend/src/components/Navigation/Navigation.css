@@ -1,5 +1,7 @@
 .navigation-list {
   display: flex;
+  align-items: center;
+  gap: 100px;
 }
 
 .logo-container {
@@ -18,4 +20,9 @@
 
 .navigation-list li {
   color: #fff;
+}
+
+.favorited-questions {
+  fill: red;
+  font-size: 30px;
 }

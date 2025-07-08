@@ -13,8 +13,7 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         category: 'books',
-      },
-      {
+      },{
         category: 'movies',
       }, {
         category: 'music',

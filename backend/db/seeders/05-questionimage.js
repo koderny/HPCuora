@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         questionId: 2,
-        url: "https://m.media-amazon.com/images/I/81zD9kaVW9L._SL1500_.jpg",
+        url: "https://d3k74ww17vqc8e.cloudfront.net/app/uploads/2022/06/16120709/1998_370_dm1_cover-800x1162.jpg",
         preview: true
       },
       {
@@ -34,6 +34,11 @@ module.exports = {
       {
         questionId: 5,
         url: "https://devontrevarrowflaherty.com/wp-content/uploads/2020/04/on-writing.jpg",
+        preview: true
+      },
+      {
+        questionId: 6,
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzy9nt22kuxxmWHCodn3bMQLov-XljafbGB6nzCXQeDjo37clQ",
         preview: true
       },
 

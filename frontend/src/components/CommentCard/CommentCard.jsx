@@ -7,11 +7,11 @@ import DeleteCommentModal from '../DeleteCommentModal';
 import UpdateCommentModal from '../AllQuestions/UpdateAComment';
 
 
-const CommentCard = ({ id, commentBody, questionId, userId, updatedAt }) => {
+const CommentCard = ({ id, commentBody, commenter, questionId, userId, updatedAt }) => {
 
     const { setModalContent } = useModal();
     const currentUser = useSelector((state) => state.session.user)
-    console.log(currentUser)
+    // console.log(currentUser)
     const commentDate = (commentDate) => {
 
         const date = new Date(commentDate);
@@ -20,8 +20,11 @@ const CommentCard = ({ id, commentBody, questionId, userId, updatedAt }) => {
     }
 
     return (
-        <div id='comment-card'>
-
+        <div className='comment-card'>
+            <div className="author-profile-pic">
+                        {commenter?.profilePicUrl ? <img src={commenter?.profilePicUrl} alt={commenter?.firstName} /> : <img src="profilePics/NPP.jpeg" alt="avatar" />}
+                        <p className='question-card-text'>{commenter?.firstName} {commenter?.lastName}</p>
+                    </div>
             <span> {commentBody}</span>
 
             <div id="comment-card-comment-user-date-container">

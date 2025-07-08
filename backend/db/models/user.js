@@ -74,10 +74,10 @@ module.exports = (sequelize) => {
           len: [60, 60],
         },
       },
-    //   profilePicture: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false,
-    // }
+      profilePicUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
   },
     {
       sequelize,
