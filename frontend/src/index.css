@@ -16,6 +16,30 @@ ul {
     list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+
+.button-primary {
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    background-color: rgb(79, 79, 179);
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.button-secondry {
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    background-color: rgb(103, 93, 93);
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+}
+
 .button-danger {
     width: fit-content;
     padding: 10px;
@@ -23,5 +47,18 @@ ul {
     background-color: rgb(98, 25, 25);
     color: white;
     cursor: pointer;
+    font-size: 13px;
 }
+
+.buttons-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.error-message {
+    color: red;
+}
+
+
+
 

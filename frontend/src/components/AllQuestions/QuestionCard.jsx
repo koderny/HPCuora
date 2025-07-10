@@ -9,16 +9,19 @@ import './QuestionCard.css'
 // import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 // import { faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
 import { CiHeart } from "react-icons/ci";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegComment } from "react-icons/fa";
 import { addFavoritesThunk, deleteFavoriteThunk } from '../../store/savedQuestion';
 
 
 
 const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comments }) => {
 
-    const [questionId, setQuestionId] = useState(null);
+
     const dispatch = useDispatch();
     const favoriteById = useSelector(state => state.favorites.byId[id]);
+
+    const [questionId, setQuestionId] = useState(null);
+    const [commentsVisible, setCommentsVisible] = useState(false);
     // console.log(id, favoriteById, "favoritebyid")
     const handleDelete = async () => {
         setQuestionId(id)
@@ -41,9 +44,9 @@ const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comme
         <div className="question-post">
             <div>
                 <div className="question-user-fav" >
-                    
+
                     <div className="author-profile-pic">
-                        {author?.profilePicUrl ? <img src={author?.profilePicUrl} alt={author?.firstName} /> : <img src="profilePics/NPP.jpeg" alt="avatar" />}
+                        {author?.profilePicUrl ? <img src={author?.profilePicUrl} alt={author?.firstName} /> : <img src="/profilePics/NPP.jpeg" alt="avatar" />}
                         <p className='question-card-text'>{author?.firstName} {author?.lastName}</p>
                     </div>
 
@@ -70,16 +73,19 @@ const QuestionCard = ({ id, questionBody, questionImage, author, loggedIn, comme
                     </div>
                 </NavLink>
                 {loggedIn == author?.id ? (
-                    <div>
-                        <NavLink to={`/questions/${id}/edit`}>Edit</NavLink>
-                        <button onClick={handleDelete}>Delete</button>
+                    <div className='buttons-wrapper'>
+                        <NavLink className="button-secondry" to={`/questions/${id}/edit`}>Edit</NavLink>
+                        <button className="button-danger" onClick={handleDelete}>Delete</button>
                     </div>
                 ) : ""}
                 {questionId !== null && (
                     <DeleteQuestionModal questionId={questionId} setQuestionId={setQuestionId} />
                 )}
+                <div className='more-info-buttons'>
+                    <p onClick={() => setCommentsVisible(!commentsVisible)}><FaRegComment />{comments.length} </p>
+                </div>
                 {/* <CommentFormModal/> */}
-                {comments.map((comment, id) => (
+                {commentsVisible && comments.map((comment, id) => (
                     <CommentCard {...comment} key={id} />
                 ))}
             </div>

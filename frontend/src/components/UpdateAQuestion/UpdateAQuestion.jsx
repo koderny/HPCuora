@@ -10,10 +10,9 @@ function UpdateAQuestion() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { id } = useParams();
-    
+
     const sessionUser = useSelector((state) => state.session.user);
     const question = useSelector((state) => state.questions.byId[id]);
-    
     const [questionBody, setQuestionBody] = useState("");
     const [imageUrls, setImageUrls] = useState([]);
     const [errors, setErrors] = useState({});
@@ -23,13 +22,15 @@ function UpdateAQuestion() {
 
         if (question) {
             setQuestionBody(question.questionBody);
-            const urls= question.questionImage.map(image => image.url); 
+            const previewImgUrl = question.questionImage.find(image => image.preview)?.url;
+            const otherImages = question.questionImage.filter(image => !image.preview).map(image => image.url);
+
             setImageUrls([
-                urls[0] || '', 
-                urls[1] || '',
-                urls[2] || ''
+                previewImgUrl || '',
+                otherImages[0] || '',
+                otherImages[1] || ''
             ])
-        
+
         }
     }, [question]);
 
@@ -45,7 +46,7 @@ function UpdateAQuestion() {
             newErrors.questionBody = "Please keep your post under 2000 characters"
         }
 
-        if(!imageUrls[0]?.trim()){
+        if (!imageUrls[0]?.trim()) {
             newErrors.imageUrls = 'At least one image is required'
         }
 
@@ -63,8 +64,8 @@ function UpdateAQuestion() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        if(Object.keys(errors).length) return;
+
+        if (Object.keys(errors).length) return;
 
         const serverResponse = await dispatch(
             updateAQuestionThunk((id), {
@@ -86,19 +87,16 @@ function UpdateAQuestion() {
 
     return (
         <div className="update-container">
-            <h2 id='update-post'>Update a Post</h2>
+            <h2 id='update-post'>Update a Question</h2>
 
             <form className="image-container" onSubmit={handleSubmit}>
                 <label className='update-input'>
-                    Product Name
-                    <input className="input-container"
-                        type="text"
-                        value={questionBody}
+                    Question
+                    <textarea defaultValue={questionBody}
                         onChange={(e) => setQuestionBody(e.target.value)}
-                        required
-                    />
+                        required></textarea>
                 </label>
-                
+
                 {errors.imageUrls && <p className="error-message">{errors.imageUrls}</p>}
                 <label className='create-input'>
                     Preview Image
@@ -125,9 +123,7 @@ function UpdateAQuestion() {
                     />
                 </label>
 
-                <button className="update-button-container" type="submit">Update Product</button>
-
-
+                <button className="button-primary" type="submit">Update your question</button>
             </form>
         </div>
     );

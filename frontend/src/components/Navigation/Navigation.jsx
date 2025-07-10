@@ -13,6 +13,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className='navigation-list'>
+      
       {sessionUser && <li><NavLink to="/favoriteQuestions"><FaHeart className="favorited-questions"/></NavLink></li>}
        {isLoaded && (
         <li>

@@ -10,7 +10,7 @@ const UpdateCommentModal = ({ commentId, questionId }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const currentComment = useSelector((state) => state.comments.byId[commentId])
-    console.log(currentComment)
+    // console.log(currentComment)
     const [comment, setComment] = useState('');
     const [errors, setErrors] = useState({})
     const [serverError, setServerError] = useState("");

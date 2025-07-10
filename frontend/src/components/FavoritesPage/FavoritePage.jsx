@@ -10,7 +10,7 @@ const FavoritesPage = () => {
     const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
     const favorites = useSelector((state) => state.favorites.allFavorites);
-    console.log(favorites, "favorites")
+    // console.log(favorites, "favorites")
 
     useEffect(() => {
         dispatch(getAllFavoritesThunk());
@@ -42,7 +42,7 @@ const FavoritesPage = () => {
 
                         >
                             <div className="author-profile-pic">
-                                {fav?.favQuestion?.author?.profilePicUrl ? <img src={fav?.favQuestion?.author?.profilePicUrl} alt={fav?.favQuestion?.author?.firstName} /> : <img src="profilePics/NPP.jpeg" alt="avatar" />}
+                                {fav?.favQuestion?.author?.profilePicUrl ? <img src={fav?.favQuestion?.author?.profilePicUrl} alt={fav?.favQuestion?.author?.firstName} /> : <img src="/profilePics/NPP.jpeg" alt="avatar" />}
                                 <p className='question-card-text'>  {fav.favQuestion?.author?.firstName} {fav.favQuestion?.author?.lastName}</p>
                             </div>
 

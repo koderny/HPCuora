@@ -5,20 +5,22 @@ import { useEffect, useState } from 'react';
 import { getAllQuestionsThunk } from '../../store/question';
 import { getAllFavoritesThunk } from '../../store/savedQuestion';
 import { getAllCategoriesThunk } from '../../store/category';
-
+import { useOutletContext } from 'react-router-dom';
 
 
 const AllQuestions = () => {
     const dispatch = useDispatch();
 
     const sessionUser = useSelector(state => state.session.user);
-    console.log(sessionUser)
+    // console.log(sessionUser)
     const questions = useSelector((state) => state.questions.allQuestions);
     const categories = useSelector((state) => state.categories.allCategories);
-    console.log(categories, 'categories')
+    // console.log(categories, 'categories')
 
     const [categoryId, setCategoryId] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    // const [commentsVisible, setCommentsVisible] = useState(false);
+    const { search } = useOutletContext();
 
 
     useEffect(() => {
@@ -33,9 +35,20 @@ const AllQuestions = () => {
         }
     }, [dispatch, isLoaded, questions])
 
-    const filteredQuestions = categoryId ? questions.filter(question => question.categoryId == categoryId) : questions;
+    let filteredQuestions = questions;
 
-    console.log(filteredQuestions, "filtered questions")
+    if (categoryId) {
+
+        filteredQuestions = filteredQuestions.filter(question => question.categoryId == categoryId);
+    }
+
+    if(search){
+        filteredQuestions = filteredQuestions.filter(question => question.questionBody.toLowerCase().includes(search.toLowerCase()));
+    }
+
+
+
+    // console.log(filteredQuestions, "filtered questions")
 
     if (isLoaded) {
         return (
@@ -68,7 +81,9 @@ const AllQuestions = () => {
                     {filteredQuestions && filteredQuestions.length ? filteredQuestions.slice().reverse().map((question, i) => {
                         return (
                             <div id='single-card' key={`${i}-${question.id}`}>
-                                <QuestionCard {...question} loggedIn={sessionUser?.id} />
+                                <QuestionCard {...question} loggedIn={sessionUser?.id} 
+                                // commentsVisible={commentsVisible} setCommentsVisible={setCommentsVisible} 
+                                />
                             </div>
                         )
                     }) : ''}

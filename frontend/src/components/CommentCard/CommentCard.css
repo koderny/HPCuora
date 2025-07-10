@@ -2,17 +2,38 @@
     margin-bottom: 20px;
 }
 
-#single-card .comment-card .author-profile-pic {
+#question-detail-box .comment-card .author-info {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 5px;
     
 }
 
-#single-card .comment-card .author-profile-pic img {
+#single-card .comment-card .author-profile-pic img, #question-detail-box .comment-card .author-profile-pic img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     border: 2px solid black;
     object-fit: cover;
     margin: 0;
+}
+
+.author-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.commenter-info {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-card-comment-user-date {
+    font-size: 12px;
+}
+
+.comment-body {
+    margin-left: 65px;
 }

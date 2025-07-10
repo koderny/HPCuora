@@ -18,7 +18,7 @@ module.exports = {
         email: 'demo@user.io',
         username: 'Demo-lition',
         hashedPassword: bcrypt.hashSync('password'),
-        profilePicUrl: "https://images.unsplash.com/photo-1564564244660-5d73c057f2d2?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z3V5fGVufDB8fDB8fHww"
+        profilePicUrl: "https://avatars.githubusercontent.com/u/155031377?v=4"
 
       },
       {
@@ -27,7 +27,7 @@ module.exports = {
         email: 'user1@user.io',
         username: 'FakeUser1',
         hashedPassword: bcrypt.hashSync('password1'),
-        profilePicUrl: "https://i.ibb.co/nqQNhY0g/AB.jpg"
+        profilePicUrl: "https://avatars.githubusercontent.com/u/95654116?v=4"
       },
       {
         firstName: 'Roger',
@@ -59,7 +59,8 @@ module.exports = {
         lastName: 'Black',
         email: 'user5@user.io',
         username: 'FakeUser5',
-        hashedPassword: bcrypt.hashSync('password5')
+        hashedPassword: bcrypt.hashSync('password5'),
+        profilePicUrl: ""
       },
       {
         firstName: 'Anthony',
@@ -67,27 +68,31 @@ module.exports = {
         email: 'user6@user.io',
         username: 'FakeUser6',
         hashedPassword: bcrypt.hashSync('password6'),
+        profilePicUrl: "https://geneacdn.net/bundles/geneanetgeneastar/images/celebrites/200px/kiedisantho.jpg"
       },
       {
         firstName: 'Chad',
         lastName: 'Smith',
         email: 'user7@user.io',
         username: 'FakeUser7',
-        hashedPassword: bcrypt.hashSync('password7')
+        hashedPassword: bcrypt.hashSync('password7'),
+        profilePicUrl: "https://www.moderndrummer.com/wp-content/uploads/2011/08/Chad-Smith-Modern-Drummer-1-e1313609138321.jpg?w=781"
       },
       {
         firstName: 'John',
         lastName: 'Frusciante',
         email: 'user8@user.io',
         username: 'FakeUser8',
-        hashedPassword: bcrypt.hashSync('password8')
+        hashedPassword: bcrypt.hashSync('password8'),
+        profilePicUrl: "https://assets.exclaim.ca/dr2uqw6xy/image/upload/c_limit,w_890/f_auto/q_auto/john-frusciante-rhcp-2022-matt-forsythe?_a=BAVAfVIB0"
       },
       {
         firstName: 'Michael',
         lastName: 'Balzary',
         email: 'user9@user.io',
         username: 'FakeUser9',
-        hashedPassword: bcrypt.hashSync('password9')
+        hashedPassword: bcrypt.hashSync('password9'),
+        profilePicUrl: "https://media.baselineresearch.com/images/789366/789366_full.jpg"
       },
       
       

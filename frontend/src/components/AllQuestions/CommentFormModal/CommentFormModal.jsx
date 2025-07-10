@@ -82,7 +82,7 @@ const CommentFormModal = ({ questionId }) => {
             rows={6}
           />
           
-          <button type="submit" disabled={!validComment} id="comment-form-submit">
+          <button className="button-primary" type="submit" disabled={!validComment} id="comment-form-submit">
             Submit Your Comment
           </button>
         </form>

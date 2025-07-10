@@ -2,7 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
-const { Op } = require("sequelize"); 
+const { Op } = require("sequelize");
 
 // --Utility Imports--
 const { requireAuth } = require('../../utils/auth');
@@ -180,6 +180,12 @@ router.get('/:id', async (req, res, next) => {
         {
           model: Comment,
           as: "comments",
+          include: [
+            {
+              model: User,
+              as: "commenter"
+            }
+          ]
         }
         ]
       });
@@ -374,8 +380,6 @@ router.get('/:id/comments', async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 
 

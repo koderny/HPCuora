@@ -14,6 +14,8 @@ import Header from './components/Header/Header';
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [search, setSearch] = useState();
+
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
@@ -23,8 +25,9 @@ function Layout() {
 
   return (
     <>
-      <Header isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
+      <Header isLoaded={isLoaded} search = {search} setSearch={setSearch}/>
+      {isLoaded && <Outlet context={{search, setSearch}}/>} 
+      {/* <Footer/> */}
     </>
   );
 }
@@ -35,7 +38,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage/>
+        element: <HomePage />
       },
       {
         path: "/questions/:id",

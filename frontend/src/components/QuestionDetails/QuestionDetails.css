@@ -1,17 +1,17 @@
 #question-details img {
-    width: 400px;
-    height: 400px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  width: 400px;
+  height: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #question-detail-box {
-     width: 500px;
+  width: 500px;
   margin: 0 auto;
-  background-color: #fff; 
-  border: 1px solid #ddd; 
+  background-color: rgb(32, 32, 32);
+  border: 1px solid #ddd;
   padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }

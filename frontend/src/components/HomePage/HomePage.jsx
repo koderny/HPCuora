@@ -4,8 +4,10 @@ import AllQuestions from '../AllQuestions'
 import './HomePage.css'
 
 const HomePage = () => {
+    
   return (
     <div id='home-page'>
+         
         <CreateQuestion/>
         <AllQuestions/>
 
